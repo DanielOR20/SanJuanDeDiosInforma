@@ -1,0 +1,75 @@
+{
+    "users": [
+        {
+            "id": "1",
+            "name": "Marcela Vargas",
+            "email": "admin@sanjuan.cr",
+            "password": "admin123",
+            "role": "admin"
+        },
+        {
+            "id": "2",
+            "name": "Vecino San Juan",
+            "email": "vecino@sanjuan.cr",
+            "password": "vecino123",
+            "role": "user"
+        }
+    ],
+    "businesses": [
+        {
+            "id": "1",
+            "name": "Panadería Doña Rosa",
+            "category": "Alimentación",
+            "phone": "2259-3344",
+            "address": "100m Este del Parque Central",
+            "status": "Abierto Ahora",
+            "rating": 4.9,
+            "reviewsCount": 128,
+            "verified": true
+        },
+        {
+            "id": "2",
+            "name": "Taller Mecánico Central",
+            "category": "Automotriz",
+            "phone": "2250-9988",
+            "address": "Calle Fallas, 250m Sur",
+            "status": "Abierto Ahora",
+            "rating": 4.8,
+            "reviewsCount": 95,
+            "verified": true
+        },
+        {
+            "id": "3",
+            "name": "Barbería y Estilo El Parque",
+            "category": "Belleza",
+            "phone": "8844-1290",
+            "address": "100m Oeste de Plaza de Deportes",
+            "status": "Pendiente",
+            "rating": 0,
+            "reviewsCount": 0,
+            "verified": false
+        }
+    ],
+    "notices": [
+        {
+            "id": "1",
+            "title": "Aviso Urgente: Mantenimiento programado de agua potable",
+            "category": "Servicios Públicos",
+            "priority": "Alta",
+            "sector": "Sector Central y Calle Fallas",
+            "description": "Corte programado de 8:00 AM a 2:00 PM por reparaciones técnicas de AyA.",
+            "date": "2026-10-17",
+            "status": "Activo"
+        },
+        {
+            "id": "2",
+            "title": "Ruta especial de recolección de reciclaje valorizable",
+            "category": "Recolección",
+            "priority": "Normal",
+            "sector": "Todo el distrito",
+            "description": "Recolección de cartón, plástico limpio y vidrio a partir de las 6:30 AM.",
+            "date": "2026-10-23",
+            "status": "Activo"
+        }
+    ]
+}
