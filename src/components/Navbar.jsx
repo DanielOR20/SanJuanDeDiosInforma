@@ -1,155 +1,280 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { 
+  LogIn, 
+  LogOut, 
   Sun, 
   Moon, 
-  User, 
-  LogOut, 
-  ShieldCheck, 
-  Compass, 
-  Calendar, 
-  Bell, 
-  Bot, 
-  LayoutDashboard 
+  Menu,
+  X,
+  MessageSquareWarning
 } from 'lucide-react';
 
 export const Navbar = () => {
-  const { user, logout, isAdmin, theme, toggleTheme, adjustFontSize } = useApp();
+  const { 
+    user, 
+    logout, 
+    theme, 
+    toggleTheme, 
+    fontSize, 
+    increaseFontSize, 
+    decreaseFontSize 
+  } = useApp();
+  
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    setMenuOpen(false);
+  };
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <header style={{
-      backgroundColor: 'var(--primary)',
-      color: '#FFFFFF',
-      padding: '0.75rem 1.5rem',
+      backgroundColor: 'var(--surface)',
+      borderBottom: '1px solid var(--border)',
       position: 'sticky',
       top: 0,
-      zIndex: 50,
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+      zIndex: 2000,
+      boxShadow: 'var(--shadow-sm)'
     }}>
-      <div style={{
-        maxWidth: '1200px',
-        margin: '0 auto',
+      <div className="stitch-container" style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '1rem'
+        paddingTop: '0.65rem',
+        paddingBottom: '0.65rem',
+        position: 'relative'
       }}>
-        {/* Marca / Logo */}
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#FFFFFF' }}>
+        {/* LOGO */}
+        <Link to="/" onClick={closeMenu} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', zIndex: 2001 }}>
           <div style={{
-            backgroundColor: '#DC2626',
-            color: '#FFFFFF',
-            fontWeight: 'bold',
-            padding: '0.3rem 0.6rem',
-            borderRadius: '4px',
-            fontSize: '0.9rem',
-            letterSpacing: '0.5px'
+            backgroundColor: 'var(--primary)',
+            color: 'white',
+            fontWeight: '900',
+            fontSize: '0.85rem',
+            padding: '0.3rem 0.55rem',
+            borderRadius: 'var(--radius-sm)'
           }}>
             CR
           </div>
           <div>
-            <div style={{ fontWeight: '800', fontSize: '1.15rem', lineHeight: '1.2' }}>
+            <span style={{ fontSize: '1.05rem', fontWeight: '800', color: 'var(--text-main)', display: 'block', lineHeight: 1.1 }}>
               San Juan de Dios
-            </div>
-            <div style={{ fontSize: '0.75rem', letterSpacing: '2px', opacity: 0.9 }}>
+            </span>
+            <span style={{ fontSize: '0.68rem', fontWeight: '700', color: 'var(--primary)', letterSpacing: '0.5px' }}>
               INFORMA
-            </div>
+            </span>
           </div>
         </Link>
 
-        {/* Enlaces de Navegación Principal */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', fontSize: '0.95rem' }}>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            Inicio
-          </Link>
-          <Link to="/directorio" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            <Compass size={16} /> Comercios
-          </Link>
-          <Link to="/agenda" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            <Calendar size={16} /> Agenda & Servicios
-          </Link>
-          <Link to="/avisos" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            <Bell size={16} /> Avisos
-          </Link>
-          <Link to="/asistente" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#FCD34D', fontWeight: '600' }}>
-            <Bot size={16} /> Guía IA
-          </Link>
-          {isAdmin && (
-            <Link to="/admin" style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '0.3rem', 
-              backgroundColor: 'rgba(255,255,255,0.15)',
-              padding: '0.3rem 0.6rem',
-              borderRadius: '4px'
-            }}>
-              <LayoutDashboard size={16} /> Panel ADI
-            </Link>
-          )}
-        </nav>
-
-        {/* Herramientas de Accesibilidad y Sesión */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          {/* Ajuste de Texto A- / A+ */}
-          <div style={{ display: 'flex', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '4px' }}>
-            <button 
-              onClick={() => adjustFontSize(-1)}
-              title="Reducir tamaño de letra"
-              style={{ background: 'none', border: 'none', color: '#fff', padding: '0.3rem 0.5rem', fontWeight: 'bold' }}
+        {/* ACCESIBILIDAD (A- / A+ y TEMA) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', zIndex: 2001 }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            backgroundColor: 'var(--surface-subtle)',
+            borderRadius: 'var(--radius-sm)',
+            border: '1px solid var(--border)',
+            padding: '0.1rem 0.2rem'
+          }}>
+            <button
+              onClick={decreaseFontSize}
+              title="Reducir texto"
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: '800',
+                fontSize: '0.75rem',
+                color: fontSize === 'normal' ? 'var(--text-subtle)' : 'var(--primary)',
+                padding: '0.2rem 0.45rem'
+              }}
             >
               A-
             </button>
-            <button 
-              onClick={() => adjustFontSize(1)}
-              title="Aumentar tamaño de letra"
-              style={{ background: 'none', border: 'none', color: '#fff', padding: '0.3rem 0.5rem', fontWeight: 'bold' }}
+            <span style={{ color: 'var(--border-strong)', fontSize: '0.7rem' }}>|</span>
+            <button
+              onClick={increaseFontSize}
+              title="Aumentar texto"
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: '800',
+                fontSize: '0.85rem',
+                color: fontSize === 'xlarge' ? 'var(--text-subtle)' : 'var(--primary)',
+                padding: '0.2rem 0.45rem'
+              }}
             >
               A+
             </button>
           </div>
 
-          {/* Modo Claro / Oscuro */}
           <button 
             onClick={toggleTheme}
-            title={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}
-            style={{ background: 'none', border: 'none', color: '#fff', display: 'flex', alignItems: 'center', padding: '0.3rem' }}
+            title="Cambiar tema"
+            style={{
+              background: 'none',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-sm)',
+              cursor: 'pointer',
+              color: 'var(--text-muted)',
+              padding: '0.35rem',
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: 'var(--surface-subtle)'
+            }}
           >
-            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
 
-          {/* Usuario / Sesión */}
-          {user ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                {isAdmin ? <ShieldCheck size={16} color="#6EE7B7" /> : <User size={16} />}
-                {user.name.split(' ')[0]}
-              </span>
-              <button 
-                onClick={logout}
-                title="Cerrar sesión"
-                style={{ background: 'none', border: 'none', color: '#fff', display: 'flex', alignItems: 'center' }}
-              >
-                <LogOut size={16} />
-              </button>
-            </div>
-          ) : (
-            <Link 
-              to="/login"
-              style={{
-                backgroundColor: '#FFFFFF',
-                color: 'var(--primary)',
-                padding: '0.35rem 0.8rem',
-                borderRadius: '4px',
-                fontWeight: '600',
-                fontSize: '0.85rem'
-              }}
-            >
-              Ingresar
-            </Link>
-          )}
+          {/* Menú hamburguesa móvil */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="mobile-hamburger-btn"
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              color: 'var(--text-main)',
+              padding: '0.35rem',
+              marginLeft: '0.25rem',
+              display: 'none'
+            }}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+
+        {/* ENLACES PRINCIPALES */}
+        <nav className={`main-nav-links ${menuOpen ? 'nav-mobile-open' : ''}`}>
+          <NavLink to="/" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Inicio
+          </NavLink>
+          <NavLink to="/directorio" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Comercios
+          </NavLink>
+          <NavLink to="/agenda" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Agenda & Servicios
+          </NavLink>
+          <NavLink to="/avisos" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Avisos
+          </NavLink>
+          <NavLink to="/foro" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Tribuna & Denuncias
+          </NavLink>
+          <NavLink to="/asistente" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Guía IA
+          </NavLink>
+
+          {user?.role === 'admin' && (
+            <NavLink to="/admin" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} style={{ color: 'var(--tertiary)', fontWeight: '800' }}>
+              Panel ADI
+            </NavLink>
+          )}
+
+          {/* Autenticación */}
+          <div style={{ marginLeft: '0.5rem' }} className="auth-btn-wrapper">
+            {user ? (
+              <button
+                onClick={handleLogout}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  backgroundColor: 'var(--surface-subtle)',
+                  color: 'var(--secondary)',
+                  border: '1px solid var(--border)',
+                  padding: '0.45rem 0.85rem',
+                  borderRadius: 'var(--radius-sm)',
+                  fontWeight: '700',
+                  fontSize: '0.82rem',
+                  cursor: 'pointer'
+                }}
+              >
+                <LogOut size={14} /> Salir ({user.name.split(' ')[0]})
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                onClick={closeMenu}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  backgroundColor: 'var(--primary)',
+                  color: 'white',
+                  padding: '0.45rem 0.95rem',
+                  borderRadius: 'var(--radius-sm)',
+                  fontWeight: '700',
+                  fontSize: '0.82rem',
+                  textDecoration: 'none'
+                }}
+              >
+                <LogIn size={14} /> Ingresar
+              </Link>
+            )}
+          </div>
+        </nav>
       </div>
+
+      <style>{`
+        .main-nav-links {
+          display: flex;
+          align-items: center;
+          gap: 1.15rem;
+        }
+
+        @media (max-width: 980px) {
+          .mobile-hamburger-btn {
+            display: block !important;
+          }
+
+          .main-nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--surface);
+            border-bottom: 2px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem 1.5rem;
+            gap: 1rem;
+            z-index: 2500;
+          }
+
+          .main-nav-links.nav-mobile-open {
+            display: flex !important;
+          }
+
+          .nav-link {
+            width: 100%;
+            padding: 0.5rem 0;
+            font-size: 1rem;
+            border-bottom: 1px solid var(--border);
+          }
+
+          .auth-btn-wrapper {
+            margin-left: 0 !important;
+            margin-top: 0.5rem;
+            width: 100%;
+          }
+
+          .auth-btn-wrapper a, .auth-btn-wrapper button {
+            width: 100%;
+            justify-content: center;
+            padding: 0.65rem !important;
+          }
+        }
+      `}</style>
     </header>
   );
 };

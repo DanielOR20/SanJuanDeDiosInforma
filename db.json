@@ -2,204 +2,333 @@
   "users": [
     {
       "id": "1",
-      "name": "Marcela Vargas",
-      "email": "admin@sanjuan.cr",
-      "role": "admin"
+      "name": "Junta Directiva ADI",
+      "email": "administracion@sanjuan.go.cr",
+      "password": "admin",
+      "role": "admin",
+      "department": "Asociación de Desarrollo Integral",
+      "status": "Activo",
+      "lastAccess": "2026-09-24T13:45:00Z"
     },
     {
       "id": "2",
-      "name": "Carlos Mora",
+      "name": "Daniel Morales Fallas",
       "email": "vecino@sanjuan.cr",
-      "role": "user"
+      "password": "vecino",
+      "role": "user",
+      "cedula": "1-1823-0492",
+      "status": "Activo",
+      "registeredAt": "2026-08-15T09:30:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Alex Solano Rivera",
+      "email": "alex.solano@sanjuan.cr",
+      "password": "vecino",
+      "role": "user",
+      "cedula": "1-1542-0891",
+      "status": "Activo",
+      "registeredAt": "2026-08-20T14:15:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Victor Vargas Monge",
+      "email": "victor.vargas@sanjuan.cr",
+      "password": "vecino",
+      "role": "moderator",
+      "cedula": "1-1734-0128",
+      "status": "Activo",
+      "department": "Comité de Vigilancia y Aseo",
+      "registeredAt": "2026-08-22T10:00:00Z"
+    },
+    {
+      "id": "5",
+      "name": "Bianca Campos Ureña",
+      "email": "bianca.campos@sanjuan.cr",
+      "password": "vecino",
+      "role": "user",
+      "cedula": "1-1904-0345",
+      "status": "Suspendido",
+      "registeredAt": "2026-09-01T11:20:00Z"
+    }
+  ],
+  "bulletins": [
+    {
+      "id": "1",
+      "title": "Convocatoria Extraordinaria de Asamblea General ADI",
+      "category": "Institucional",
+      "priority": "Alta",
+      "author": "Secretaría General ADI",
+      "date": "2026-09-22",
+      "summary": "Presentación del presupuesto cantonal de bacheo y rendición de cuentas del Salón Comunal ante el Concejo Municipal.",
+      "isPinned": true
+    },
+    {
+      "id": "2",
+      "title": "Campaña Cantonal de Descarrichización y Lucha contra el Dengue",
+      "category": "Salud Pública",
+      "priority": "Media",
+      "author": "Comisión de Salud ADI - EBAIS",
+      "date": "2026-09-20",
+      "summary": "Coordinación con camiones recolectores en Calle Fallas, Novedades y el Centro para recoger llantas y recipientes.",
+      "isPinned": false
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "1",
+      "timestamp": "2026-09-24T10:15:00Z",
+      "user": "Junta Directiva ADI",
+      "action": "APROBAR_COMERCIO",
+      "target": "Panadería & Pastelería La Espiga Dorada",
+      "details": "Comercio verificado y publicado con geolocalización en Calle Fallas"
+    },
+    {
+      "id": "2",
+      "timestamp": "2026-09-24T11:40:00Z",
+      "user": "Junta Directiva ADI",
+      "action": "CAMBIO_ESTADO_INCIDENCIA",
+      "target": "Avería EXP-2026-089 (Fuga de Agua AyA)",
+      "details": "Estado cambiado a 'En Cuadrilla (AyA/CNFL)' tras reporte vecinal con 14 confirmaciones"
+    },
+    {
+      "user": "Junta Directiva ADI",
+      "action": "CAMBIO_ESTADO_INCIDENCIA",
+      "target": "EXP-2026-089 - Ruptura de tubería matriz de agua potable",
+      "details": "Estado actualizado a \"Inspección Municipal\".",
+      "timestamp": "2026-09-24T20:33:57.783Z",
+      "id": "zlJHCLS"
     }
   ],
   "businesses": [
     {
       "id": "1",
-      "name": "Panadería Doña Rosa",
-      "category": "Alimentación",
-      "description": "Pan tradicional caliente en las mañanas y tardes, repostería fresca y café recién molido.",
-      "phone": "2259-3344",
-      "whatsapp": "50622593344",
-      "address": "100m Este del Parque Central de San Juan de Dios",
+      "name": "Abastecedor y Pulpería La Central",
+      "category": "Alimentación y Abarrotes",
+      "address": "San Juan Centro, 50m norte del Parque Central",
+      "phone": "2250-1122",
+      "whatsapp": "8888-1122",
       "lat": 9.8942,
-      "lng": -84.0735,
-      "schedule": "Lunes a Sábado: 5:30 AM - 8:00 PM | Domingo: 6:00 AM - 1:00 PM",
-      "rating": 4.8,
-      "reviewsCount": 38,
-      "status": "Abierto Ahora",
-      "verified": true
+      "lng": -84.0739,
+      "verified": true,
+      "description": "Abarrotes, lácteos, recargas telefónicas y pago de servicios públicos."
     },
     {
       "id": "2",
-      "name": "Taller Mecánico & Frenos Central",
-      "category": "Automotriz",
-      "description": "Mantenimiento preventivo, cambio de aceite, frenos, suspensión y diagnóstico por computadora.",
-      "phone": "2250-9988",
-      "whatsapp": "50622509988",
-      "address": "Calle Fallas, 250m Sur de la entrada principal",
-      "lat": 9.8915,
-      "lng": -84.0718,
-      "schedule": "Lunes a Viernes: 7:30 AM - 5:30 PM | Sábado: 8:00 AM - 1:00 PM",
-      "rating": 4.6,
-      "reviewsCount": 24,
-      "status": "Abierto Ahora",
-      "verified": true
+      "name": "Taller Mecánico & Frenos El Cruce",
+      "category": "Servicios Automotrices",
+      "address": "Cruce hacia Poás de Aserrí, frente a la bomba",
+      "phone": "2250-3344",
+      "whatsapp": "8777-3344",
+      "lat": 9.8892,
+      "lng": -84.0712,
+      "verified": true,
+      "description": "Mantenimiento preventivo, cambio de aceite y mecánica general."
     },
     {
       "id": "3",
-      "name": "Farmacia La Buena Esperanza",
-      "category": "Salud",
-      "description": "Medicamentos genéricos y de patente, toma de presión, inyecciones y servicio a domicilio en San Juan.",
-      "phone": "2259-1288",
-      "whatsapp": "50622591288",
-      "address": "Frente al EBAIS de San Juan de Dios",
-      "lat": 9.895,
-      "lng": -84.0752,
-      "schedule": "Todos los días: 7:00 AM - 9:00 PM",
-      "rating": 4.9,
-      "reviewsCount": 42,
-      "status": "Abierto Ahora",
-      "verified": true
-    },
-    {
-      "id": "4",
-      "name": "Ferretería & Materiales El Constructor",
-      "category": "Construcción",
-      "description": "Fontanería, electricidad, pintura, herramientas, cemento y materiales pesados con entrega en obra.",
-      "phone": "2259-4500",
-      "whatsapp": "50622594500",
-      "address": "300m Oeste de la Iglesia Católica",
-      "lat": 9.8938,
-      "lng": -84.077,
-      "schedule": "Lunes a Sábado: 7:00 AM - 6:00 PM",
-      "rating": 4.7,
-      "reviewsCount": 19,
-      "status": "Abierto Ahora",
-      "verified": true
-    },
-    {
-      "id": "5",
-      "name": "Soda y Comidas Caseras La Esquina",
-      "category": "Alimentación",
-      "description": "Casados tradicionales, desayunos con pinto casero, tortillas palmeadas y batidos naturales.",
-      "phone": "2259-7711",
-      "whatsapp": "50622597711",
-      "address": "Costado Sur de la Plaza de Deportes",
-      "lat": 9.8929,
-      "lng": -84.0741,
-      "schedule": "Lunes a Domingo: 6:30 AM - 4:00 PM",
-      "rating": 4.5,
-      "reviewsCount": 31,
-      "status": "Abierto Ahora",
-      "verified": true
-    },
-    {
-      "id": "6",
-      "name": "Veterinaria San Francisco de Asís",
-      "category": "Mascotas",
-      "description": "Consultas veterinarias, vacunación, desparasitación, peluquería canina y alimentos para mascotas.",
-      "phone": "2259-6633",
-      "whatsapp": "50622596633",
-      "address": "Calle Principal, contiguo a la Carnicería La Bendición",
-      "lat": 9.8946,
-      "lng": -84.0725,
-      "schedule": "Lunes a Sábado: 8:00 AM - 6:00 PM",
-      "rating": 4.8,
-      "reviewsCount": 27,
-      "status": "Abierto Ahora",
-      "verified": true
-    },
-    {
-      "id": "7",
-      "name": "Barbería & Estilo Urbano",
-      "category": "Belleza",
-      "description": "Cortes clásicos y modernos, perfilado de barba y tratamientos capilares.",
-      "phone": "8877-2233",
-      "whatsapp": "50688772233",
-      "address": "75m Norte de la Parada de Buses Central",
-      "lat": 9.8934,
-      "lng": -84.0748,
-      "schedule": "Lunes a Sábado: 9:00 AM - 7:30 PM",
-      "rating": 5,
-      "reviewsCount": 12,
-      "status": "Pendiente de Aprobación",
-      "verified": false
+      "name": "Soda y Panadería Las Delicias de Fallas",
+      "category": "Restaurantes y Cafeterías",
+      "address": "Entrada principal a Calle Fallas, contiguo a la parada de buses",
+      "phone": "2250-7788",
+      "whatsapp": "8999-7788",
+      "lat": 9.8916,
+      "lng": -84.0719,
+      "verified": false,
+      "description": "Desayunos típicos, café de especialidad y repostería artesanal recién horneada."
     }
   ],
   "notices": [
     {
       "id": "1",
-      "title": "Mantenimiento y Reparación de Tubería Matriz - AyA",
+      "caseNumber": "EXP-2026-089",
+      "title": "Ruptura de tubería matriz de agua potable",
       "category": "Servicios Públicos",
       "priority": "Alta",
-      "sector": "San Juan Centro y Calle Fallas",
-      "lat": 9.8935,
-      "lng": -84.073,
+      "sector": "Calle Fallas (Entrada / Pulpería)",
+      "lat": 9.8915,
+      "lng": -84.0718,
+      "description": "Fuga considerable de agua potable sobre la acera peatonal. Cuadrilla de AyA notificada por la ADI.",
       "date": "2026-09-24",
-      "status": "En Proceso",
-      "votes": 15,
-      "description": "Corte programado por cuadrillas del AyA para reemplazo de válvula madre de 6 pulgadas. Se recomienda almacenar agua para uso básico."
+      "status": "Inspección Municipal",
+      "votes": 14,
+      "internalNote": "Boleta de reporte AyA #89231 en seguimiento con ingeniería cantonal."
     },
     {
       "id": "2",
-      "title": "Campaña Cantonal de Reciclaje y Manejo de Llantas",
-      "category": "Recolección",
-      "priority": "Normal",
-      "sector": "Salón Comunal ADI",
-      "lat": 9.8931,
-      "lng": -84.0743,
-      "date": "2026-09-26",
-      "status": "Activo",
-      "votes": 8,
-      "description": "Recepción de llantas usadas, vidrio, aluminio y residuos electrónicos limpios en el parqueo del salón comunal de 8:00 AM a 2:00 PM."
-    },
-    {
-      "id": "3",
-      "title": "Cierre Parcial por Bacheo Asfáltico Municipal",
+      "caseNumber": "EXP-2026-090",
+      "title": "Hueco profundo y hundimiento de calzada",
       "category": "Vialidad",
       "priority": "Alta",
       "sector": "Cruce hacia Poás de Aserrí",
       "lat": 9.889,
       "lng": -84.071,
-      "date": "2026-09-25",
-      "status": "Programado",
-      "votes": 21,
-      "description": "Trabajos de carpeta asfáltica en tramo de 400 metros. Tránsito regulado con paso a un solo carril de 8:00 AM a 3:30 PM."
+      "description": "Hundimiento que obstaculiza un carril en la ruta de buses. Riesgo de accidente para motociclistas.",
+      "date": "2026-09-23",
+      "status": "Inspección Municipal",
+      "votes": 9,
+      "internalNote": "Incluido en la lista de bacheo de la Unidad Técnica de Gestión Vial de la Municipalidad."
+    },
+    {
+      "id": "3",
+      "caseNumber": "EXP-2026-091",
+      "title": "Luminaria pública intermitente en plaza deportiva",
+      "category": "Servicios Públicos",
+      "priority": "Normal",
+      "sector": "Sector Plaza de Deportes / Salón Comunal",
+      "lat": 9.893,
+      "lng": -84.0742,
+      "description": "Poste CNFL #45-12 con falla nocturna, provocando zona oscura en el paso peatonal.",
+      "date": "2026-09-22",
+      "status": "Reportado por Vecino",
+      "votes": 4,
+      "internalNote": "Pendiente de visita técnica nocturna."
+    },
+    {
+      "id": "4",
+      "caseNumber": "EXP-2026-085",
+      "title": "Limpieza de alcantarillado pluvial por desbordamiento",
+      "category": "Vialidad",
+      "priority": "Alta",
+      "sector": "San Juan Centro (Parque / Iglesia)",
+      "lat": 9.894,
+      "lng": -84.074,
+      "description": "Acumulación de sedimentos que provocaba inundación menor frente al parque.",
+      "date": "2026-09-18",
+      "status": "Resuelto",
+      "votes": 18,
+      "internalNote": "Cuadrilla municipal desobstruyó el tragante con vactor el 20/09."
     }
   ],
   "landmarks": [
     {
-      "id": "l1",
-      "name": "Parque Central de San Juan de Dios",
-      "type": "Civico",
-      "lat": 9.894,
-      "lng": -84.074,
-      "description": "Punto de encuentro comunal, áreas verdes y parada principal de autobuses hacia San José."
+      "id": "1",
+      "name": "Parroquia San Juan de Dios",
+      "type": "Cívico / Religioso",
+      "lat": 9.8941,
+      "lng": -84.0741,
+      "info": "Templo principal y punto de referencia histórico del distrito."
     },
     {
-      "id": "l2",
-      "name": "EBAIS San Juan de Dios (CCSS)",
+      "id": "2",
+      "name": "Salón Comunal y Oficinas ADI",
+      "type": "Comunal / Gobierno",
+      "lat": 9.8931,
+      "lng": -84.0743,
+      "info": "Sede de la Asociación de Desarrollo Integral y actividades comunitarias."
+    },
+    {
+      "id": "3",
+      "name": "Plaza de Deportes San Juan",
+      "type": "Recreativo",
+      "lat": 9.8929,
+      "lng": -84.0745,
+      "info": "Espacio deportivo y recreativo distrital."
+    },
+    {
+      "id": "4",
+      "name": "EBAIS San Juan de Dios",
       "type": "Salud",
-      "lat": 9.8952,
-      "lng": -84.0754,
-      "description": "Centro de atención médica primaria del distrito. Urgencias menores y citas programadas."
+      "lat": 9.8953,
+      "lng": -84.0755,
+      "info": "Centro de atención médica primaria de la CCSS."
+    }
+  ],
+  "publicComplaints": [
+    {
+      "id": "1",
+      "title": "Botadero clandestino de basura y escombros",
+      "category": "Medio Ambiente",
+      "description": "Personas en camiones desconocidos están tirando escombros y ramas en el lote baldío contiguo a la quebrada. Provoca malos olores y plagas.",
+      "imageUrl": "https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?w=600&auto=format&fit=crop&q=80",
+      "sector": "Sector Quebrada / Límite con Poás",
+      "isAnonymous": true,
+      "authorName": "Vecino Anónimo",
+      "authorEmail": null,
+      "date": "2026-09-23",
+      "status": "Aprobada",
+      "comments": [
+        {
+          "id": "c1",
+          "authorName": "Daniel Morales Fallas",
+          "date": "2026-09-23 16:30",
+          "text": "Efectivamente, esto se da casi siempre los martes en la madrugada. Ocupamos cámara de vigilancia de la ADI ahí."
+        },
+        {
+          "id": "c2",
+          "authorName": "Victor Vargas Monge",
+          "date": "2026-09-24 09:10",
+          "text": "Ya se coordinó con el Comité de Aseo para elevar la queja a Gestión Ambiental del cantón."
+        }
+      ]
     },
     {
-      "id": "l3",
-      "name": "Delegación Policial Fuerza Pública",
-      "type": "Seguridad",
-      "lat": 9.8925,
-      "lng": -84.0732,
-      "description": "Puesto policial de proximidad y vigilancia comunitaria 24/7."
+      "id": "2",
+      "title": "Fiestas ruidosas constantes hasta la madrugada",
+      "category": "Seguridad y Convivencia",
+      "description": "Una vivienda en Calle Fallas tiene música con volumen excesivo de jueves a domingo hasta las 4 AM. Afecta el descanso de adultos mayores.",
+      "imageUrl": "",
+      "sector": "Calle Fallas",
+      "isAnonymous": false,
+      "authorName": "Alex Solano Rivera",
+      "authorEmail": "alex.solano@sanjuan.cr",
+      "date": "2026-09-24",
+      "status": "Pendiente",
+      "comments": []
+    }
+  ],
+  "procedures": [
+    {
+      "id": "1",
+      "applicant": "Carlos Mora Jiménez",
+      "cedula": "1-1245-0891",
+      "type": "Alquiler de Salón Comunal",
+      "dateRequested": "2026-10-15",
+      "purpose": "Actividad benéfica pro-fondo adultos mayores de San Juan.",
+      "status": "Pendiente",
+      "notes": "Pendiente de comprobante de depósito de garantía."
     },
     {
-      "id": "l4",
-      "name": "Salón Comunal & Cancha de Deportes",
-      "type": "Deportes",
-      "lat": 9.893,
-      "lng": -84.0742,
-      "description": "Sede de la ADI, eventos culturales, clases de zumba y partidos de fútbol vecinal."
+      "id": "2",
+      "applicant": "Asociación Deportiva Juvenil",
+      "cedula": "3-002-849102",
+      "type": "Uso de Plaza de Deportes",
+      "dateRequested": "2026-10-04",
+      "purpose": "Torneo distrital de fútbol infantil.",
+      "status": "Aprobado",
+      "notes": "Horario asignado: 8:00 AM a 1:00 PM."
+    }
+  ],
+  "budgetProjects": [
+    {
+      "id": "1",
+      "code": "PROY-2026-01",
+      "title": "Recarpeteo asfáltico y bacheo en sectores críticos",
+      "budgetTotal": 18500000,
+      "budgetExecuted": 14200000,
+      "progressPercent": 75,
+      "department": "Unidad Técnica de Gestión Vial",
+      "status": "En Ejecución"
+    },
+    {
+      "id": "2",
+      "code": "PROY-2026-02",
+      "title": "Instalación de luminarias LED en Plaza de Deportes",
+      "budgetTotal": 4500000,
+      "budgetExecuted": 4500000,
+      "progressPercent": 100,
+      "department": "Comité de Deportes y ADI",
+      "status": "Finalizado"
+    },
+    {
+      "id": "3",
+      "code": "PROY-2026-03",
+      "title": "Ampliación de aceras peatonales y rampas 7600",
+      "budgetTotal": 8200000,
+      "budgetExecuted": 2100000,
+      "progressPercent": 25,
+      "department": "Obras Públicas",
+      "status": "En Ejecución"
     }
   ]
 }

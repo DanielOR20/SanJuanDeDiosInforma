@@ -139,3 +139,55 @@ button {
   color: var(--tertiary);
   border: 1px solid rgba(22, 163, 74, 0.2);
 }
+
+/* ===================================================
+   ADAPTABILIDAD RESPONSIVA (Móviles y Tablets)
+   =================================================== */
+
+@media (max-width: 900px) {
+  /* En tablets y móviles, las vistas divididas de mapa pasan a 1 sola columna vertical */
+  .split-layout {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Contenedor general con margen adecuado en celular */
+  .stitch-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Títulos principales escalables */
+  h1 {
+    font-size: 1.55rem !important;
+  }
+
+  h2 {
+    font-size: 1.25rem !important;
+  }
+
+  /* Tarjetas con relleno más compacto */
+  .stitch-card {
+    padding: 1rem !important;
+  }
+
+  /* Modales a pantalla casi completa */
+  .modal-content-responsive {
+    width: 95% !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    padding: 1.25rem !important;
+  }
+
+  /* Controles de filtro y búsqueda en columna completa */
+  .filter-controls {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  /* Mapas con altura amigable para hacer scroll táctil */
+  .leaflet-container {
+    height: 380px !important;
+  }
+}
