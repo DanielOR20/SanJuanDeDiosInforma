@@ -76,3 +76,22 @@ export const getLandmarks = async () => {
     if (!response.ok) throw new Error('Error al obtener puntos cívicos');
     return response.json();
 };
+
+export const voteNotice = async (notice) => {
+  const currentVotes = Number(notice.votes) || 0;
+  const response = await fetch(`${API_URL}/notices/${notice.id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      votes: currentVotes + 1
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error en servidor: ${response.status}`);
+  }
+
+  return response.json();
+};

@@ -54,7 +54,7 @@
       "phone": "2259-1288",
       "whatsapp": "50622591288",
       "address": "Frente al EBAIS de San Juan de Dios",
-      "lat": 9.8950,
+      "lat": 9.895,
       "lng": -84.0752,
       "schedule": "Todos los días: 7:00 AM - 9:00 PM",
       "rating": 4.9,
@@ -71,7 +71,7 @@
       "whatsapp": "50622594500",
       "address": "300m Oeste de la Iglesia Católica",
       "lat": 9.8938,
-      "lng": -84.0770,
+      "lng": -84.077,
       "schedule": "Lunes a Sábado: 7:00 AM - 6:00 PM",
       "rating": 4.7,
       "reviewsCount": 19,
@@ -121,7 +121,7 @@
       "lat": 9.8934,
       "lng": -84.0748,
       "schedule": "Lunes a Sábado: 9:00 AM - 7:30 PM",
-      "rating": 5.0,
+      "rating": 5,
       "reviewsCount": 12,
       "status": "Pendiente de Aprobación",
       "verified": false
@@ -135,10 +135,10 @@
       "priority": "Alta",
       "sector": "San Juan Centro y Calle Fallas",
       "lat": 9.8935,
-      "lng": -84.0730,
+      "lng": -84.073,
       "date": "2026-09-24",
       "status": "En Proceso",
-      "votes": 14,
+      "votes": 15,
       "description": "Corte programado por cuadrillas del AyA para reemplazo de válvula madre de 6 pulgadas. Se recomienda almacenar agua para uso básico."
     },
     {
@@ -160,8 +160,8 @@
       "category": "Vialidad",
       "priority": "Alta",
       "sector": "Cruce hacia Poás de Aserrí",
-      "lat": 9.8890,
-      "lng": -84.0710,
+      "lat": 9.889,
+      "lng": -84.071,
       "date": "2026-09-25",
       "status": "Programado",
       "votes": 21,
@@ -173,8 +173,8 @@
       "id": "l1",
       "name": "Parque Central de San Juan de Dios",
       "type": "Civico",
-      "lat": 9.8940,
-      "lng": -84.0740,
+      "lat": 9.894,
+      "lng": -84.074,
       "description": "Punto de encuentro comunal, áreas verdes y parada principal de autobuses hacia San José."
     },
     {
@@ -197,7 +197,7 @@
       "id": "l4",
       "name": "Salón Comunal & Cancha de Deportes",
       "type": "Deportes",
-      "lat": 9.8930,
+      "lat": 9.893,
       "lng": -84.0742,
       "description": "Sede de la ADI, eventos culturales, clases de zumba y partidos de fútbol vecinal."
     }
