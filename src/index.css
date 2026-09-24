@@ -1,26 +1,69 @@
 :root {
+  /* Paleta Oficial */
   --primary: #1E3A8A;
+  --primary-hover: #172554;
+  --primary-light: #EFF6FF;
   --secondary: #DC2626;
+  --secondary-light: #FEF2F2;
   --tertiary: #16A34A;
+  --tertiary-light: #F0FDF4;
   --accent: #D97706;
+  --accent-light: #FFFBEB;
+
+  /* Neutros e Interfaz */
   --bg: #F8FAFC;
   --surface: #FFFFFF;
-  --text-main: #0F172A;
-  --text-muted: #475569;
+  --surface-subtle: #F1F5F9;
   --border: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --text-subtle: #94A3B8;
+
+  /* Sombras Stitch */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+
+  /* Bordes */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
   --font-base: 16px;
 }
 
 [data-theme='dark'] {
-  --primary: #3B82F6;
-  --secondary: #EF4444;
-  --tertiary: #22C55E;
-  --accent: #F59E0B;
-  --bg: #0F172A;
-  --surface: #1E293B;
-  --text-main: #F1F5F9;
-  --text-muted: #94A3B8;
-  --border: #334155;
+  /* Mantenemos los colores de marca nítidos, sin desteñir */
+  --primary: #1E3A8A;
+  --primary-hover: #1D4ED8;
+  --primary-light: #172554;
+  --secondary: #DC2626;
+  --secondary-light: rgba(220, 38, 38, 0.15);
+  --tertiary: #16A34A;
+  --tertiary-light: rgba(22, 163, 74, 0.15);
+  --accent: #D97706;
+  --accent-light: rgba(217, 119, 6, 0.15);
+
+  /* Negro verdadero y neutros oscuros limpios */
+  --bg: #09090B;
+  /* Fondo casi negro puro */
+  --surface: #121214;
+  /* Tarjetas en grafito oscuro */
+  --surface-subtle: #1C1C1F;
+  /* Secciones intermedias */
+  --border: #27272A;
+  /* Bordes finos y sutiles */
+  --border-strong: #3F3F46;
+  --text-main: #FAFAFA;
+  /* Blanco nítido */
+  --text-muted: #A1A1AA;
+  /* Gris claro para lectura descansada */
+  --text-subtle: #71717A;
+
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
 }
 
 * {
@@ -34,10 +77,12 @@ html {
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   background-color: var(--bg);
   color: var(--text-main);
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -49,4 +94,48 @@ a {
 button {
   font-family: inherit;
   cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+/* Clases utilitarias reutilizables tipo Stitch */
+.stitch-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.stitch-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.stitch-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+}
+
+.badge-urgent {
+  background-color: var(--secondary-light);
+  color: var(--secondary);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.badge-success {
+  background-color: var(--tertiary-light);
+  color: var(--tertiary);
+  border: 1px solid rgba(22, 163, 74, 0.2);
 }
