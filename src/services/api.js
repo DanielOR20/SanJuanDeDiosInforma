@@ -70,3 +70,9 @@ export const getLocalWeather = async () => {
     if (!res.ok) throw new Error('Error al consultar el clima exterior');
     return res.json();
 };
+
+export const getLandmarks = async () => {
+    const response = await fetch(`${API_URL}/landmarks`);
+    if (!response.ok) throw new Error('Error al obtener puntos cívicos');
+    return response.json();
+};
