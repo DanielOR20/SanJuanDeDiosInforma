@@ -605,5 +605,77 @@
       "status": "Pendiente Inspección",
       "date": "2026-09-23"
     }
+  ],
+  "transparencyData": {
+    "boardMembers": [
+      {
+        "id": "1",
+        "role": "Presidencia",
+        "name": "Lic. Carlos Solís Vargas",
+        "period": "2024 - 2026",
+        "contact": "presidencia@sanjuan.cr"
+      },
+      {
+        "id": "2",
+        "role": "Secretaría General",
+        "name": "MSc. Elena Fallas Mora",
+        "period": "2024 - 2026",
+        "contact": "secretaria@sanjuan.cr"
+      },
+      {
+        "id": "3",
+        "role": "Tesorería Comunal",
+        "name": "Ing. Marco Cordero Chaves",
+        "period": "2024 - 2026",
+        "contact": "tesoreria@sanjuan.cr"
+      },
+      {
+        "id": "4",
+        "role": "Fiscalía Ciudadana",
+        "name": "Licda. Sofía Benavides Ureña",
+        "period": "2024 - 2026",
+        "contact": "fiscalia@sanjuan.cr"
+      }
+    ],
+    "financialSummary": {
+      "quarter": "T3 - 2026",
+      "allocatedBudget": 18500000,
+      "executedBudget": 14250000,
+      "remainingBudget": 4250000,
+      "mainInvestments": [
+        { "concept": "Bacheo y carpeta asfáltica Vía 217", "amount": 8500000 },
+        { "concept": "Mantenimiento Salón Comunal y Parque", "amount": 3200000 },
+        { "concept": "Campaña de reciclaje y salud pública", "amount": 2550000 }
+      ]
+    }
+  },
+  "districtActs": [
+    {
+      "id": "1",
+      "actNumber": "ACTA-ORD-2026-18",
+      "type": "Sesión Ordinaria",
+      "date": "2026-09-15",
+      "summary": "Aprobación de fondos para mejoras en cordón de caño sector Itaipú y evaluación de quejas de presión de agua ante AyA.",
+      "fileSize": "1.4 MB",
+      "status": "Firme y Aprobada"
+    },
+    {
+      "id": "2",
+      "actNumber": "ACTA-ORD-2026-17",
+      "type": "Sesión Ordinaria",
+      "date": "2026-09-01",
+      "summary": "Plan de contingencia ambiental contra el dengue con el EBAIS y asignación de presupuesto para recolección de llantas.",
+      "fileSize": "1.1 MB",
+      "status": "Firme y Aprobada"
+    },
+    {
+      "id": "3",
+      "actNumber": "ACTA-EXT-2026-04",
+      "type": "Sesión Extraordinaria",
+      "date": "2026-08-20",
+      "summary": "Reunión con delegados de CNFL por luminarias intermitentes en Calle Máquinas y recepción de ofertas para techado.",
+      "fileSize": "890 KB",
+      "status": "Firme y Aprobada"
+    }
   ]
 }

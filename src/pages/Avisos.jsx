@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getNotices, createNotice } from '../services/api';
+import { TransparencyModule } from '../components/transparency/TransparencyModule';
 import { ComunidadMap } from '../components/ComunidadMap';
 import {
   AlertTriangle,
@@ -465,9 +466,11 @@ export const Avisos = () => {
               </div>
             </form>
           </div>
+
         </div>
       )}
-
+{/* MÓDULO MODULAR: TRANSPARENCIA Y ACTAS */}
+      <TransparencyModule />
     </div>
   );
 };

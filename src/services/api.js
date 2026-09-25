@@ -321,13 +321,13 @@ export const respondSupportTicket = async (id, responseText) => {
 // --- MÓDULOS INSTITUCIONALES (INSPIRACIÓN MUNICIPALIDAD) ---
 
 export const getServicesStatus = async () => {
-  const res = await fetch(`${BASE_URL}/servicesStatus`);
+  const res = await fetch(`${API_URL}/servicesStatus`);
   if (!res.ok) throw new Error('Error al obtener estado de servicios');
   return res.json();
 };
 
 export const getWasteSchedule = async () => {
-  const res = await fetch(`${BASE_URL}/wasteSchedule`);
+  const res = await fetch(`${API_URL}/wasteSchedule`);
   if (!res.ok) throw new Error('Error al obtener calendario de residuos');
   return res.json();
 };
@@ -340,7 +340,7 @@ export const createResidencyCertificate = async (certData) => {
     issuedAt: new Date().toISOString().split('T')[0],
     status: 'Emitida'
   };
-  const res = await fetch(`${BASE_URL}/residencyCertificates`, {
+  const res = await fetch(`${API_URL}/residencyCertificates`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
@@ -350,7 +350,7 @@ export const createResidencyCertificate = async (certData) => {
 };
 
 export const getEmergencyContacts = async () => {
-  const res = await fetch(`${BASE_URL}/emergencyContacts`);
+  const res = await fetch(`${API_URL}/emergencyContacts`);
   if (!res.ok) throw new Error('Error al obtener contactos de emergencia');
   return res.json();
 };
@@ -358,7 +358,7 @@ export const getEmergencyContacts = async () => {
 // --- MÓDULO MODULAR: BOLSA DE EMPLEO Y OFICIOS VECINALES ---
 
 export const getCommunityJobs = async () => {
-  const res = await fetch(`${BASE_URL}/communityJobs`);
+  const res = await fetch(`${API_URL}/communityJobs`);
   if (!res.ok) throw new Error('Error al obtener la bolsa de empleo');
   return res.json();
 };
@@ -368,7 +368,7 @@ export const createCommunityJob = async (jobData) => {
     ...jobData,
     date: new Date().toISOString().split('T')[0]
   };
-  const res = await fetch(`${BASE_URL}/communityJobs`, {
+  const res = await fetch(`${API_URL}/communityJobs`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
@@ -380,13 +380,50 @@ export const createCommunityJob = async (jobData) => {
 // --- MÓDULO MODULAR: ZONIFICACIÓN Y OBRA MENOR ---
 
 export const getZoningRules = async () => {
-  const res = await fetch(`${BASE_URL}/zoningRules`);
+  const res = await fetch(`${API_URL}/zoningRules`);
   if (!res.ok) throw new Error('Error al obtener reglas de zonificación');
   return res.json();
 };
 
 export const getMinorWorkRules = async () => {
-  const res = await fetch(`${BASE_URL}/minorWorkRules`);
+  const res = await fetch(`${API_URL}/minorWorkRules`);
   if (!res.ok) throw new Error('Error al obtener normativas de obra menor');
+  return res.json();
+};
+
+// --- MÓDULO AMBIENTAL ---
+
+export const getEnvironmentalData = async () => {
+  const res = await fetch(`${API_URL}/environmentalData`);
+  if (!res.ok) throw new Error('Error al obtener datos ambientales');
+  return res.json();
+};
+
+export const createMosquitoReport = async (reportData) => {
+  const payload = {
+    ...reportData,
+    date: new Date().toISOString().split('T')[0],
+    status: 'Pendiente Inspección'
+  };
+  const res = await fetch(`${API_URL}/mosquitoReports`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error('Error al registrar reporte de criadero');
+  return res.json();
+};
+
+// --- MÓDULO MODULAR: TRANSPARENCIA Y ACTAS ADI ---
+
+export const getTransparencyData = async () => {
+  const res = await fetch(`${BASE_URL}/transparencyData`);
+  if (!res.ok) throw new Error('Error al obtener datos de transparencia');
+  return res.json();
+};
+
+export const getDistrictActs = async () => {
+  const res = await fetch(`${BASE_URL}/districtActs`);
+  if (!res.ok) throw new Error('Error al obtener actas distritales');
   return res.json();
 };
