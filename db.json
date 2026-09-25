@@ -677,5 +677,40 @@
       "fileSize": "890 KB",
       "status": "Firme y Aprobada"
     }
+  ],
+  "denunciationCategories": [
+    { "id": "aceras", "label": "Aceras destruidas o sin rampa Ley 7600" },
+    { "id": "botadero", "label": "Botadero clandestino de basura o escombros" },
+    { "id": "aguas", "label": "Fuga de agua potable o colapso de alcantarillado" },
+    { "id": "lotes", "label": "Lote baldío enmontado o con criaderos" },
+    { "id": "alumbrado", "label": "Luminaria pública apagada o cableado expuesto" }
+  ],
+  "formalDenunciations": [
+    {
+      "id": "1",
+      "folio": "DEN-2026-1042",
+      "category": "Aceras destruidas o sin rampa Ley 7600",
+      "sector": "San Juan Centro",
+      "locationExact": "100m norte del Parque Comunal, frente a panadería",
+      "description": "Tramo de acera totalmente quebrado por raíces, personas mayores y coches se ven obligados a tirarse a la calle principal.",
+      "status": "Inspección Programada",
+      "isAnonymous": false,
+      "citizenName": "Marielos Calderón",
+      "date": "2026-09-22",
+      "resolutionNote": "Se coordinó visita con el fiscal de obras de la ADI para el próximo martes."
+    },
+    {
+      "id": "2",
+      "folio": "DEN-2026-0988",
+      "category": "Botadero clandestino de basura o escombros",
+      "sector": "Sector Calle Máquinas",
+      "locationExact": "Orilla de la quebrada, 200m este del taller",
+      "description": "Camioneta descargó llantas viejas y material de construcción en la servidumbre pública.",
+      "status": "Elevada a Municipalidad",
+      "isAnonymous": true,
+      "citizenName": "Anónimo",
+      "date": "2026-09-18",
+      "resolutionNote": "Oficio remitido al departamento cantonal de Gestión Ambiental para retiro de desechos."
+    }
   ]
 }

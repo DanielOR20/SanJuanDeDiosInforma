@@ -417,13 +417,45 @@ export const createMosquitoReport = async (reportData) => {
 // --- MÓDULO MODULAR: TRANSPARENCIA Y ACTAS ADI ---
 
 export const getTransparencyData = async () => {
-  const res = await fetch(`${BASE_URL}/transparencyData`);
+  const res = await fetch(`${API_URL}/transparencyData`);
   if (!res.ok) throw new Error('Error al obtener datos de transparencia');
   return res.json();
 };
 
 export const getDistrictActs = async () => {
-  const res = await fetch(`${BASE_URL}/districtActs`);
+  const res = await fetch(`${API_URL}/districtActs`);
   if (!res.ok) throw new Error('Error al obtener actas distritales');
+  return res.json();
+};
+
+// --- MÓDULO MODULAR: DENUNCIAS CATEGORIZADAS Y FOLIO ---
+
+export const getDenunciationCategories = async () => {
+  const res = await fetch(`${BASE_URL}/denunciationCategories`);
+  if (!res.ok) throw new Error('Error al obtener categorías de denuncias');
+  return res.json();
+};
+
+export const getFormalDenunciations = async () => {
+  const res = await fetch(`${BASE_URL}/formalDenunciations`);
+  if (!res.ok) throw new Error('Error al obtener denuncias formales');
+  return res.json();
+};
+
+export const createFormalDenunciation = async (data) => {
+  const folio = `DEN-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+  const payload = {
+    ...data,
+    folio,
+    status: 'Recibida en Plataforma',
+    date: new Date().toISOString().split('T')[0],
+    resolutionNote: 'Expediente aperturado para asignación de cuadrilla o inspector comunal.'
+  };
+  const res = await fetch(`${BASE_URL}/formalDenunciations`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error('Error al registrar la denuncia');
   return res.json();
 };

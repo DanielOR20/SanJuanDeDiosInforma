@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { CategorizedDenunciationModule } from '../components/denunciations/CategorizedDenunciationModule';
 import { getPublicComplaints, createPublicComplaint, addComplaintComment } from '../services/api';
 import { 
   MessageSquareWarning, 
@@ -448,7 +449,8 @@ export const Foro = () => {
           </div>
         </div>
       )}
-
+      {/* 2. NUEVA SECCIÓN DE DENUNCIAS CLASIFICADAS */}
+      <CategorizedDenunciationModule />
     </div>
   );
 };
