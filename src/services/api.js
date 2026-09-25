@@ -279,3 +279,78 @@ export const getBudgetProjects = async () => {
   if (!res.ok) throw new Error('Error al cargar presupuestos');
   return res.json();
 };
+
+// ==========================================
+// 10. TICKETS DE AYUDA Y ASISTENCIA COMUNAL
+// ==========================================
+export const getSupportTickets = async () => {
+  const res = await fetch(`${API_URL}/supportTickets`);
+  if (!res.ok) throw new Error('Error al cargar tickets de soporte');
+  return res.json();
+};
+
+export const createSupportTicket = async (ticketData) => {
+  const res = await fetch(`${API_URL}/supportTickets`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      ...ticketData,
+      ticketNumber: `TCK-2026-${Math.floor(100 + Math.random() * 900)}`,
+      date: new Date().toISOString().split('T')[0],
+      status: 'Abierto',
+      response: null
+    })
+  });
+  if (!res.ok) throw new Error('Error al registrar ticket');
+  return res.json();
+};
+
+export const respondSupportTicket = async (id, responseText) => {
+  const res = await fetch(`${API_URL}/supportTickets/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      response: responseText,
+      status: 'Resuelto'
+    })
+  });
+  if (!res.ok) throw new Error('Error al responder ticket');
+  return res.json();
+};
+
+// --- MÓDULOS INSTITUCIONALES (INSPIRACIÓN MUNICIPALIDAD) ---
+
+export const getServicesStatus = async () => {
+  const res = await fetch(`${BASE_URL}/servicesStatus`);
+  if (!res.ok) throw new Error('Error al obtener estado de servicios');
+  return res.json();
+};
+
+export const getWasteSchedule = async () => {
+  const res = await fetch(`${BASE_URL}/wasteSchedule`);
+  if (!res.ok) throw new Error('Error al obtener calendario de residuos');
+  return res.json();
+};
+
+export const createResidencyCertificate = async (certData) => {
+  const folio = `CONST-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+  const payload = {
+    ...certData,
+    folio,
+    issuedAt: new Date().toISOString().split('T')[0],
+    status: 'Emitida'
+  };
+  const res = await fetch(`${BASE_URL}/residencyCertificates`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error('Error al emitir constancia comunal');
+  return res.json();
+};
+
+export const getEmergencyContacts = async () => {
+  const res = await fetch(`${BASE_URL}/emergencyContacts`);
+  if (!res.ok) throw new Error('Error al obtener contactos de emergencia');
+  return res.json();
+};

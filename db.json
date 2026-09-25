@@ -60,7 +60,7 @@
       "priority": "Alta",
       "author": "Secretaría General ADI",
       "date": "2026-09-22",
-      "summary": "Presentación del presupuesto cantonal de bacheo y rendición de cuentas del Salón Comunal ante el Concejo Municipal.",
+      "summary": "Presentación del presupuesto cantonal de bacheo sobre Vía 217 y rendición de cuentas del Salón Comunal ante el Concejo Municipal.",
       "isPinned": true
     },
     {
@@ -70,7 +70,7 @@
       "priority": "Media",
       "author": "Comisión de Salud ADI - EBAIS",
       "date": "2026-09-20",
-      "summary": "Coordinación con camiones recolectores en Calle Fallas, Novedades y el Centro para recoger llantas y recipientes.",
+      "summary": "Coordinación con camiones recolectores en Itaipú, Padrón Monge, Máquinas y Centro para recoger llantas y recipientes.",
       "isPinned": false
     }
   ],
@@ -80,8 +80,8 @@
       "timestamp": "2026-09-24T10:15:00Z",
       "user": "Junta Directiva ADI",
       "action": "APROBAR_COMERCIO",
-      "target": "Panadería & Pastelería La Espiga Dorada",
-      "details": "Comercio verificado y publicado con geolocalización en Calle Fallas"
+      "target": "Abastecedor La Central San Juan",
+      "details": "Comercio verificado y publicado con geolocalización en Vía 217"
     },
     {
       "id": "2",
@@ -89,115 +89,115 @@
       "user": "Junta Directiva ADI",
       "action": "CAMBIO_ESTADO_INCIDENCIA",
       "target": "Avería EXP-2026-089 (Fuga de Agua AyA)",
-      "details": "Estado cambiado a 'En Cuadrilla (AyA/CNFL)' tras reporte vecinal con 14 confirmaciones"
+      "details": "Estado cambiado a 'En Cuadrilla (AyA/CNFL)' tras reporte vecinal en San Juan Centro"
     },
     {
+      "id": "zlJHCLS",
       "user": "Junta Directiva ADI",
       "action": "CAMBIO_ESTADO_INCIDENCIA",
       "target": "EXP-2026-089 - Ruptura de tubería matriz de agua potable",
       "details": "Estado actualizado a \"Inspección Municipal\".",
-      "timestamp": "2026-09-24T20:33:57.783Z",
-      "id": "zlJHCLS"
+      "timestamp": "2026-09-24T20:33:57.783Z"
     }
   ],
   "businesses": [
     {
       "id": "1",
-      "name": "Abastecedor y Pulpería La Central",
+      "name": "Abastecedor Central San Juan",
       "category": "Alimentación y Abarrotes",
-      "address": "San Juan Centro, 50m norte del Parque Central",
+      "address": "San Juan de Dios, 50m norte del Templo",
       "phone": "2250-1122",
       "whatsapp": "8888-1122",
-      "lat": 9.8942,
-      "lng": -84.0739,
+      "lat": 9.8798,
+      "lng": -84.0918,
       "verified": true,
-      "description": "Abarrotes, lácteos, recargas telefónicas y pago de servicios públicos."
+      "description": "Abarrotes, lácteos y servicios sobre la calle principal."
     },
     {
       "id": "2",
-      "name": "Taller Mecánico & Frenos El Cruce",
-      "category": "Servicios Automotrices",
-      "address": "Cruce hacia Poás de Aserrí, frente a la bomba",
+      "name": "Panadería Pedrito Monge",
+      "category": "Restaurantes y Cafeterías",
+      "address": "Entrada principal a Pedrito Monge",
       "phone": "2250-3344",
       "whatsapp": "8777-3344",
-      "lat": 9.8892,
-      "lng": -84.0712,
+      "lat": 9.8812,
+      "lng": -84.0930,
       "verified": true,
-      "description": "Mantenimiento preventivo, cambio de aceite y mecánica general."
+      "description": "Pan recién horneado y café tradicional."
     },
     {
       "id": "3",
-      "name": "Soda y Panadería Las Delicias de Fallas",
-      "category": "Restaurantes y Cafeterías",
-      "address": "Entrada principal a Calle Fallas, contiguo a la parada de buses",
+      "name": "Taller Mecánico San Juan",
+      "category": "Servicios Automotrices",
+      "address": "Sector Máquina, ruta principal",
       "phone": "2250-7788",
       "whatsapp": "8999-7788",
-      "lat": 9.8916,
-      "lng": -84.0719,
-      "verified": false,
-      "description": "Desayunos típicos, café de especialidad y repostería artesanal recién horneada."
+      "lat": 9.8755,
+      "lng": -84.0945,
+      "verified": true,
+      "description": "Mecánica rápida y mantenimiento automotriz."
     }
   ],
   "notices": [
     {
       "id": "1",
       "caseNumber": "EXP-2026-089",
-      "title": "Ruptura de tubería matriz de agua potable",
+      "title": "Fuga en tubería matriz de agua potable",
       "category": "Servicios Públicos",
       "priority": "Alta",
-      "sector": "Calle Fallas (Entrada / Pulpería)",
-      "lat": 9.8915,
-      "lng": -84.0718,
-      "description": "Fuga considerable de agua potable sobre la acera peatonal. Cuadrilla de AyA notificada por la ADI.",
+      "sector": "San Juan de Dios Centro",
+      "lat": 9.8792,
+      "lng": -84.0922,
+      "description": "Fuga de agua potable frente a la plaza. Cuadrilla notificada.",
       "date": "2026-09-24",
       "status": "Inspección Municipal",
       "votes": 14,
-      "internalNote": "Boleta de reporte AyA #89231 en seguimiento con ingeniería cantonal."
+      "internalNote": "Seguimiento con cuadrilla técnica AyA Desamparados."
     },
     {
       "id": "2",
       "caseNumber": "EXP-2026-090",
-      "title": "Hueco profundo y hundimiento de calzada",
+      "title": "Hueco en calzada y alcantarilla colapsada",
       "category": "Vialidad",
       "priority": "Alta",
-      "sector": "Cruce hacia Poás de Aserrí",
-      "lat": 9.889,
-      "lng": -84.071,
-      "description": "Hundimiento que obstaculiza un carril en la ruta de buses. Riesgo de accidente para motociclistas.",
+      "sector": "Pedrito Monge",
+      "lat": 9.8805,
+      "lng": -84.0938,
+      "description": "Hundimiento en la calzada en la entrada a Pedrito Monge.",
       "date": "2026-09-23",
       "status": "Inspección Municipal",
       "votes": 9,
-      "internalNote": "Incluido en la lista de bacheo de la Unidad Técnica de Gestión Vial de la Municipalidad."
+      "internalNote": "En lista de bacheo de la Unidad Técnica de Gestión Vial."
     },
     {
       "id": "3",
       "caseNumber": "EXP-2026-091",
-      "title": "Luminaria pública intermitente en plaza deportiva",
+      "title": "Luminaria pública intermitente en Plaza de Deportes",
       "category": "Servicios Públicos",
       "priority": "Normal",
-      "sector": "Sector Plaza de Deportes / Salón Comunal",
-      "lat": 9.893,
-      "lng": -84.0742,
-      "description": "Poste CNFL #45-12 con falla nocturna, provocando zona oscura en el paso peatonal.",
+      "sector": "Sector Plaza de Deportes",
+      "lat": 9.8780,
+      "lng": -84.0908,
+      "description": "Poste CNFL con falla nocturna frente a la cancha.",
       "date": "2026-09-22",
       "status": "Reportado por Vecino",
       "votes": 4,
-      "internalNote": "Pendiente de visita técnica nocturna."
+      "internalNote": "Reporte trasladado a cuadrilla de alumbrado público."
     },
     {
       "id": "4",
       "caseNumber": "EXP-2026-085",
-      "title": "Limpieza de alcantarillado pluvial por desbordamiento",
+      "title": "Limpieza de alcantarillado pluvial",
       "category": "Vialidad",
       "priority": "Alta",
-      "sector": "San Juan Centro (Parque / Iglesia)",
-      "lat": 9.894,
-      "lng": -84.074,
-      "description": "Acumulación de sedimentos que provocaba inundación menor frente al parque.",
+      "sector": "Sector Máquina",
+      "lat": 9.8750,
+      "lng": -84.0950,
+      "description": "Desobstrucción pluvial completada por cuadrilla municipal.",
       "date": "2026-09-18",
       "status": "Resuelto",
       "votes": 18,
-      "internalNote": "Cuadrilla municipal desobstruyó el tragante con vactor el 20/09."
+      "internalNote": "Limpieza preventiva con vactor finalizada."
     }
   ],
   "landmarks": [
@@ -205,33 +205,33 @@
       "id": "1",
       "name": "Parroquia San Juan de Dios",
       "type": "Cívico / Religioso",
-      "lat": 9.8941,
-      "lng": -84.0741,
-      "info": "Templo principal y punto de referencia histórico del distrito."
+      "lat": 9.8795,
+      "lng": -84.0920,
+      "info": "Templo principal de San Juan de Dios sobre la ruta central."
     },
     {
       "id": "2",
       "name": "Salón Comunal y Oficinas ADI",
       "type": "Comunal / Gobierno",
-      "lat": 9.8931,
-      "lng": -84.0743,
-      "info": "Sede de la Asociación de Desarrollo Integral y actividades comunitarias."
+      "lat": 9.8788,
+      "lng": -84.0915,
+      "info": "Sede oficial de la Asociación de Desarrollo Integral de San Juan de Dios."
     },
     {
       "id": "3",
       "name": "Plaza de Deportes San Juan",
       "type": "Recreativo",
-      "lat": 9.8929,
-      "lng": -84.0745,
-      "info": "Espacio deportivo y recreativo distrital."
+      "lat": 9.8782,
+      "lng": -84.0910,
+      "info": "Cancha distrital de fútbol frente al Salón Comunal."
     },
     {
       "id": "4",
-      "name": "EBAIS San Juan de Dios",
-      "type": "Salud",
-      "lat": 9.8953,
-      "lng": -84.0755,
-      "info": "Centro de atención médica primaria de la CCSS."
+      "name": "Sector Pedrito Monge",
+      "type": "Comunidad",
+      "lat": 9.8810,
+      "lng": -84.0935,
+      "info": "Barrio Pedrito Monge, sector norte del distrito."
     }
   ],
   "publicComplaints": [
@@ -239,9 +239,9 @@
       "id": "1",
       "title": "Botadero clandestino de basura y escombros",
       "category": "Medio Ambiente",
-      "description": "Personas en camiones desconocidos están tirando escombros y ramas en el lote baldío contiguo a la quebrada. Provoca malos olores y plagas.",
+      "description": "Personas en camiones desconocidos están tirando escombros y ramas en el lote baldío contiguo a la quebrada en Máquinas. Provoca malos olores y plagas.",
       "imageUrl": "https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?w=600&auto=format&fit=crop&q=80",
-      "sector": "Sector Quebrada / Límite con Poás",
+      "sector": "Sector Calle Máquinas",
       "isAnonymous": true,
       "authorName": "Vecino Anónimo",
       "authorEmail": null,
@@ -266,9 +266,9 @@
       "id": "2",
       "title": "Fiestas ruidosas constantes hasta la madrugada",
       "category": "Seguridad y Convivencia",
-      "description": "Una vivienda en Calle Fallas tiene música con volumen excesivo de jueves a domingo hasta las 4 AM. Afecta el descanso de adultos mayores.",
+      "description": "Una vivienda en Padrón Monge tiene música con volumen excesivo de jueves a domingo hasta las 4 AM. Afecta el descanso de adultos mayores.",
       "imageUrl": "",
-      "sector": "Calle Fallas",
+      "sector": "Sector Padrón Monge",
       "isAnonymous": false,
       "authorName": "Alex Solano Rivera",
       "authorEmail": "alex.solano@sanjuan.cr",
@@ -303,7 +303,7 @@
     {
       "id": "1",
       "code": "PROY-2026-01",
-      "title": "Recarpeteo asfáltico y bacheo en sectores críticos",
+      "title": "Recarpeteo asfáltico y bacheo sobre Vía 217",
       "budgetTotal": 18500000,
       "budgetExecuted": 14200000,
       "progressPercent": 75,
@@ -313,7 +313,7 @@
     {
       "id": "2",
       "code": "PROY-2026-02",
-      "title": "Instalación de luminarias LED en Plaza de Deportes",
+      "title": "Instalación de luminarias LED en Plaza de Deportes San Juan",
       "budgetTotal": 4500000,
       "budgetExecuted": 4500000,
       "progressPercent": 100,
@@ -323,12 +323,132 @@
     {
       "id": "3",
       "code": "PROY-2026-03",
-      "title": "Ampliación de aceras peatonales y rampas 7600",
+      "title": "Ampliación de aceras peatonales y rampas 7600 en Centro y Padrón Monge",
       "budgetTotal": 8200000,
       "budgetExecuted": 2100000,
       "progressPercent": 25,
       "department": "Obras Públicas",
       "status": "En Ejecución"
+    }
+  ],
+  "supportTickets": [
+    {
+      "id": "1",
+      "ticketNumber": "TCK-2026-001",
+      "residentName": "Alex Solano Rivera",
+      "email": "alex.solano@sanjuan.cr",
+      "sector": "Sector Itaipú 3",
+      "subject": "Consulta sobre subsidio comunal para bacheo",
+      "message": "Quisiera consultar si la ADI puede elevar al Concejo la petición de asfalto en la entrada a Itaipú.",
+      "status": "Abierto",
+      "priority": "Media",
+      "date": "2026-09-24",
+      "response": null
+    },
+    {
+      "id": "2",
+      "ticketNumber": "TCK-2026-002",
+      "residentName": "Daniel Morales Fallas",
+      "email": "vecino@sanjuan.cr",
+      "sector": "San Juan Centro",
+      "subject": "Solicitud de llaves del Salón Comunal",
+      "message": "Ocupo coordinar el retiro de la llave para el taller de robótica distrital del próximo sábado.",
+      "status": "Resuelto",
+      "priority": "Alta",
+      "date": "2026-09-23",
+      "response": "Coordinado con el conserje Don Minor. Retirar viernes a las 3:00 PM."
+    }
+  ],
+
+"servicesStatus": {
+    "water": {
+      "status": "normal",
+      "label": "Servicio Normal",
+      "detail": "Sin suspensiones programadas en el acueducto",
+      "sector": "Distrito 03 completo",
+      "updatedAt": "2026-09-25T08:00:00Z"
+    },
+    "electric": {
+      "status": "warning",
+      "label": "Mantenimiento Preventivo",
+      "detail": "Interrupción parcial en sector Máquinas de 1:00 PM a 4:00 PM",
+      "sector": "Sector Calle Máquinas",
+      "updatedAt": "2026-09-25T07:30:00Z"
+    }
+  },
+  "wasteSchedule": [
+    {
+      "sector": "San Juan Centro & Pedrito Monge",
+      "regular": "Lunes y Jueves (6:00 AM)",
+      "recycling": "Segundo y cuarto miércoles del mes",
+      "bulky": "Primer sábado de cada mes (campaña no tradicionales)"
+    },
+    {
+      "sector": "Sector Itaipú & Calabacitas",
+      "regular": "Martes y Viernes (6:00 AM)",
+      "recycling": "Primer y tercer miércoles del mes",
+      "bulky": "Segundo sábado de cada mes"
+    },
+    {
+      "sector": "Calle Máquinas & Límite Sur",
+      "regular": "Lunes y Jueves (7:30 AM)",
+      "recycling": "Segundo y cuarto miércoles del mes",
+      "bulky": "Primer sábado de cada mes"
+    }
+  ],
+  "residencyCertificates": [
+    {
+      "id": "1",
+      "folio": "CONST-2026-0104",
+      "fullName": "Daniel Morales Fallas",
+      "cedula": "1-1823-0492",
+      "sector": "San Juan Centro",
+      "purpose": "Beca estudiantil universitaria",
+      "issuedAt": "2026-09-24",
+      "status": "Emitida"
+    }
+  ],
+
+"emergencyContacts": [
+    {
+      "id": "1",
+      "entity": "Fuerza Pública (Delegación Distrital)",
+      "phone": "2250-3112",
+      "badge": "Seguridad 24/7",
+      "type": "policia",
+      "location": "Costado norte de la Plaza de Deportes"
+    },
+    {
+      "id": "2",
+      "entity": "EBAIS San Juan de Dios (CCSS)",
+      "phone": "2250-4580",
+      "badge": "Salud y Citas",
+      "type": "salud",
+      "location": "Frente a Escuela de San Juan de Dios"
+    },
+    {
+      "id": "3",
+      "entity": "Averías y Fugas AyA (Línea Gratuita)",
+      "phone": "800-7376783",
+      "badge": "800-REPORTE",
+      "type": "agua",
+      "location": "Atención Técnica Cantonal"
+    },
+    {
+      "id": "4",
+      "entity": "Averías Eléctricas CNFL",
+      "phone": "1026",
+      "badge": "Línea 1026",
+      "type": "luz",
+      "location": "Cuadrilla Centro de Control"
+    },
+    {
+      "id": "5",
+      "entity": "Comité Comunal de Emergencias (CME / ADI)",
+      "phone": "2250-0011",
+      "badge": "Atención Local",
+      "type": "comite",
+      "location": "Oficinas Salón Comunal ADI"
     }
   ]
 }
