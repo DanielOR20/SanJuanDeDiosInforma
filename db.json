@@ -548,5 +548,62 @@
       "specs": "Manejo adecuado de aguas pluviales hacia cordón de caño sin desaguar hacia propiedades vecinas.",
       "docs": ["Formulario de mantenimiento de vivienda", "Constancia de no adeudo comunal"]
     }
+  ],
+  "environmentalData": {
+    "dengueAlert": {
+      "level": "Alerta Amarilla Preventiva",
+      "sector": "Sector Itaipú & Pedrito Monge",
+      "casesReported": 12,
+      "message": "Coordinación activa entre EBAIS y Cuadrillas ADI. Se solicita eliminar agua estancada en baldes y canoas.",
+      "updatedAt": "2026-09-24"
+    },
+    "cleanupCampaigns": [
+      {
+        "id": "1",
+        "title": "Gran Campaña de Descarrichización",
+        "sector": "San Juan Centro & Calabacitas",
+        "date": "Sábado 3 de Octubre, 2026",
+        "time": "7:00 AM - 1:00 PM",
+        "accepted": ["Llantas", "Chatarra", "Electrodomésticos viejos", "Latas"],
+        "meetingPoint": "Costado norte de la Plaza de Deportes"
+      },
+      {
+        "id": "2",
+        "title": "Recolección de Residuos No Tradicionales",
+        "sector": "Sector Itaipú & Calle Máquinas",
+        "date": "Sábado 17 de Octubre, 2026",
+        "time": "8:00 AM - 2:00 PM",
+        "accepted": ["Colchones", "Muebles de madera", "Tarimas", "Llantas"],
+        "meetingPoint": "Entrada principal Urbanización Itaipú"
+      }
+    ],
+    "ecoPoints": [
+      {
+        "id": "1",
+        "name": "Centro de Acopio Salón Comunal ADI",
+        "location": "Costado Sur de la Iglesia, Vía 217",
+        "materials": "Plástico (PET), Cartón, Aluminio, Vidrio",
+        "schedule": "Lunes a Viernes 8:00 AM - 3:30 PM",
+        "status": "Activo"
+      },
+      {
+        "id": "2",
+        "name": "Punto Verde Escuela San Juan de Dios",
+        "location": "Frente a EBAIS",
+        "materials": "Papel blanco, Cartón y Botellas plásticas",
+        "schedule": "Miércoles y Jueves 9:00 AM - 12:00 PM",
+        "status": "Activo"
+      }
+    ]
+  },
+  "mosquitoReports": [
+    {
+      "id": "1",
+      "reporterName": "Vecino Itaipú",
+      "sector": "Sector Itaipú",
+      "description": "Lote baldío detrás de los apartamentos con acumulación de llantas usadas y agua estancada.",
+      "status": "Pendiente Inspección",
+      "date": "2026-09-23"
+    }
   ]
 }

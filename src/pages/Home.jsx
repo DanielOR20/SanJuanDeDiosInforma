@@ -1,287 +1,181 @@
-import { useEffect, useState } from 'react';
-import { getLocalWeather, getBusinesses, getNotices, getLandmarks } from '../services/api';
-import { ComunidadMap } from '../components/ComunidadMap';
-import {
-    CloudSun,
-    Wind,
-    Droplets,
-    AlertTriangle,
-    Store,
-    Bus,
-    Calendar,
-    Bot,
-    MapPin,
-    ArrowRight,
-    ShieldCheck
-} from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { CivicServicesWidget } from '../components/CivicServicesWidget';
+import { EnvironmentalModule } from '../components/environmental/EnvironmentalModule';
 import { Link } from 'react-router-dom';
+import { 
+  getLocalWeather, 
+  getNotices, 
+  getBusinesses, 
+  getLandmarks,
+  getBulletins 
+} from '../services/api';
+import { DistrictMap } from '../components/DistrictMap';
+import { 
+  CloudSun, 
+  Wind, 
+  Droplets, 
+  AlertTriangle, 
+  Store, 
+  Bus, 
+  MessageSquareWarning, 
+  Bot, 
+  ArrowRight,
+  ShieldCheck,
+  Megaphone,
+  Calendar
+} from 'lucide-react';
 
 export const Home = () => {
-    const [weather, setWeather] = useState(null);
-    const [businesses, setBusinesses] = useState([]);
-    const [notices, setNotices] = useState([]);
-    const [landmarks, setLandmarks] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [weather, setWeather] = useState(null);
+  const [notices, setNotices] = useState([]);
+  const [businesses, setBusinesses] = useState([]);
+  const [landmarks, setLandmarks] = useState([]);
+  const [bulletins, setBulletins] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchHomeData = async () => {
-            try {
-                const [weatherData, bizData, noticeData, landData] = await Promise.all([
-                    getLocalWeather().catch(() => null),
-                    getBusinesses().catch(() => []),
-                    getNotices().catch(() => []),
-                    getLandmarks().catch(() => [])
-                ]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [wData, nData, bData, lData, bulData] = await Promise.all([
+          getLocalWeather().catch(() => null),
+          getNotices().catch(() => []),
+          getBusinesses().catch(() => []),
+          getLandmarks().catch(() => []),
+          getBulletins().catch(() => [])
+        ]);
 
-                setWeather(weatherData);
-                setBusinesses(bizData);
-                setNotices(noticeData);
-                setLandmarks(landData);
-            } catch (err) {
-                console.error('Error cargando portada:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
+        setWeather(wData?.current || null);
+        setNotices(nData || []);
+        setBusinesses(bData || []);
+        setLandmarks(lData || []);
+        setBulletins(bulData || []);
+      } catch (err) {
+        console.error('Error al inicializar portal principal:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        fetchHomeData();
-    }, []);
+    fetchData();
+  }, []);
 
-    const activeAlerts = notices.filter(n => n.priority === 'Alta');
+  const pinnedBulletin = bulletins.find(b => b.isPinned) || bulletins[0];
 
-    return (
-        <div className="stitch-container" style={{ paddingBottom: '3rem', marginTop: '2rem' }}>
-
-            {/* SECCIÓN HERO PRINCIPAL */}
-            <div style={{
-                background: 'linear-gradient(135deg, var(--primary) 0%, #172554 100%)',
-                color: '#FFFFFF',
-                padding: '2.5rem',
-                borderRadius: 'var(--radius-lg)',
-                marginBottom: '2rem',
-                boxShadow: 'var(--shadow-md)',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                gap: '2rem'
-            }}>
-                <div style={{ maxWidth: '600px' }}>
-                    <div style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.4rem',
-                        backgroundColor: 'rgba(255,255,255,0.15)',
-                        padding: '0.35rem 0.85rem',
-                        borderRadius: 'var(--radius-full)',
-                        fontSize: '0.85rem',
-                        fontWeight: '700',
-                        marginBottom: '1rem'
-                    }}>
-                        <ShieldCheck size={16} color="#FCD34D" /> Portal Oficial del Distrito 03 • Desamparados
-                    </div>
-
-                    <h1 style={{ fontSize: '2.4rem', fontWeight: '800', lineHeight: '1.2', marginBottom: '1rem' }}>
-                        San Juan de Dios Informa
-                    </h1>
-
-                    <p style={{ fontSize: '1.05rem', opacity: 0.9, lineHeight: '1.5', marginBottom: '1.5rem' }}>
-                        Plataforma comunitaria integral para consulta de transporte, comercios locales, alertas en tiempo real y servicios de la Asociación de Desarrollo Integral (ADI).
-                    </p>
-
-                    <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                        <Link
-                            to="/directorio"
-                            style={{
-                                backgroundColor: 'var(--secondary)',
-                                color: '#FFFFFF',
-                                padding: '0.75rem 1.4rem',
-                                borderRadius: 'var(--radius-md)',
-                                fontWeight: '700',
-                                fontSize: '0.95rem',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '0.5rem',
-                                textDecoration: 'none'
-                            }}
-                        >
-                            <Store size={18} /> Explorar Directorio
-                        </Link>
-
-                        <Link
-                            to="/avisos"
-                            style={{
-                                backgroundColor: 'rgba(255,255,255,0.2)',
-                                color: '#FFFFFF',
-                                padding: '0.75rem 1.4rem',
-                                borderRadius: 'var(--radius-md)',
-                                fontWeight: '700',
-                                fontSize: '0.95rem',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '0.5rem',
-                                textDecoration: 'none'
-                            }}
-                        >
-                            <AlertTriangle size={18} /> Ver Averías y Alertas
-                        </Link>
-                    </div>
-                </div>
-
-                {/* Tarjeta del Clima Cantonal (Open-Meteo) */}
-                <div className="stitch-card" style={{
-                    padding: '1.5rem',
-                    minWidth: '260px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    color: '#1E293B'
-                }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
-                        <CloudSun size={24} color="#D97706" />
-                        <div>
-                            <div style={{ fontSize: '0.75rem', fontWeight: '700', color: '#64748B', textTransform: 'uppercase' }}>Clima en Tiempo Real</div>
-                            <strong style={{ fontSize: '0.95rem' }}>San Juan de Dios Centro</strong>
-                        </div>
-                    </div>
-
-                    {weather ? (
-                        <div>
-                            <div style={{ fontSize: '2.5rem', fontWeight: '800', color: '#1E3A8A', margin: '0.2rem 0' }}>
-                                {weather.current?.temperature_2m || 24}°C
-                            </div>
-                            <div style={{ display: 'flex', gap: '1rem', fontSize: '0.85rem', color: '#64748B' }}>
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                                    <Droplets size={14} color="#0284C7" /> {weather.current?.relative_humidity_2m || 75}% Humedad
-                                </span>
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                                    <Wind size={14} color="#64748B" /> {weather.current?.wind_speed_10m || 12} km/h
-                                </span>
-                            </div>
-                        </div>
-                    ) : (
-                        <p style={{ fontSize: '0.85rem', color: '#64748B' }}>Conectando con estación meteorológica...</p>
-                    )}
-                </div>
+  return (
+    <div className="stitch-container" style={{ padding: '2rem 1rem 4rem 1rem' }}>
+      
+      {/* FRANJA SUPERIOR: CLIMA EN VIVO & COMUNICADO PRIORITARIO */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap: '1rem',
+        marginBottom: '2rem'
+      }}>
+        {/* Widget Clima Open-Meteo */}
+        <div className="stitch-card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderLeft: '4px solid #002B7F' }}>
+          <div>
+            <div style={{ fontSize: '0.75rem', fontWeight: '800', color: '#64748B', textTransform: 'uppercase' }}>
+              Estación Climatológica San Juan
             </div>
-
-            {/* BANNER DE ALERTAS CRÍTICAS ACTIVAS */}
-            {activeAlerts.length > 0 && (
-                <div style={{
-                    backgroundColor: '#FEE2E2',
-                    borderLeft: '5px solid #DC2626',
-                    borderRadius: 'var(--radius-md)',
-                    padding: '1rem 1.5rem',
-                    marginBottom: '2rem',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    flexWrap: 'wrap',
-                    gap: '1rem'
-                }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <AlertTriangle size={24} color="#DC2626" />
-                        <div>
-                            <strong style={{ color: '#991B1B', display: 'block', fontSize: '0.95rem' }}>
-                                Alerta Crítica Comunal ({activeAlerts[0].category}):
-                            </strong>
-                            <span style={{ color: '#7F1D1D', fontSize: '0.9rem' }}>
-                                {activeAlerts[0].title} — <em>{activeAlerts[0].sector}</em>
-                            </span>
-                        </div>
-                    </div>
-                    <Link
-                        to="/avisos"
-                        style={{
-                            color: '#DC2626',
-                            fontWeight: '700',
-                            fontSize: '0.85rem',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.25rem',
-                            textDecoration: 'none'
-                        }}
-                    >
-                        Ver detalles <ArrowRight size={16} />
-                    </Link>
-                </div>
-            )}
-
-            {/* MAPA INTERACTIVO DISTRITAL EN LA PORTADA */}
-            <div style={{ marginBottom: '2.5rem' }}>
-                <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '0.5rem' }}>
-                    <div>
-                        <h2 style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary)', margin: 0 }}>
-                            Mapa Comunitario en Vivo
-                        </h2>
-                        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', margin: '0.2rem 0 0' }}>
-                            Puntos cívicos, comercios activos y reportes ciudadanos sobre el mapa de San Juan de Dios.
-                        </p>
-                    </div>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-subtle)' }}>
-                        Navegación interactiva OpenStreetMap
-                    </span>
-                </div>
-
-                <ComunidadMap
-                    businesses={businesses}
-                    notices={notices}
-                    landmarks={landmarks}
-                    height="450px"
-                />
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginTop: '0.25rem' }}>
+              <span style={{ fontSize: '2rem', fontWeight: '900', color: '#0F172A' }}>
+                {weather ? `${Math.round(weather.temperature_2m)}°C` : '22°C'}
+              </span>
+              <span style={{ fontSize: '0.82rem', color: '#64748B', fontWeight: '600' }}>Distrito 03</span>
             </div>
-
-            {/* ACCESOS RÁPIDOS A MÓDULOS */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
-
-                <Link to="/directorio" className="stitch-card" style={{ padding: '1.5rem', textDecoration: 'none', color: 'inherit' }}>
-                    <div style={{ width: '45px', height: '45px', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                        <Store size={22} color="var(--primary)" />
-                    </div>
-                    <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.35rem', color: 'var(--primary)' }}>
-                        Comercio Local
-                    </h3>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
-                        Directorio con enlaces directos a WhatsApp, horarios y ubicación GPS de los locales del distrito.
-                    </p>
-                </Link>
-
-                <Link to="/agenda" className="stitch-card" style={{ padding: '1.5rem', textDecoration: 'none', color: 'inherit' }}>
-                    <div style={{ width: '45px', height: '45px', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--tertiary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                        <Bus size={22} color="var(--tertiary)" />
-                    </div>
-                    <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.35rem', color: 'var(--primary)' }}>
-                        Transporte y Agenda
-                    </h3>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
-                        Horarios de buses, calculadora de tarifas por pasajero y cronograma cantonal de reciclaje y basura.
-                    </p>
-                </Link>
-
-                <Link to="/avisos" className="stitch-card" style={{ padding: '1.5rem', textDecoration: 'none', color: 'inherit' }}>
-                    <div style={{ width: '45px', height: '45px', borderRadius: 'var(--radius-md)', backgroundColor: '#FEE2E2', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                        <AlertTriangle size={22} color="var(--secondary)" />
-                    </div>
-                    <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.35rem', color: 'var(--primary)' }}>
-                        Alertas Ciudadanas
-                    </h3>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
-                        Reportes vecinales de cortes de agua, averías eléctricas y bacheo con votos de afectación vecinal.
-                    </p>
-                </Link>
-
-                <Link to="/asistente" className="stitch-card" style={{ padding: '1.5rem', textDecoration: 'none', color: 'inherit' }}>
-                    <div style={{ width: '45px', height: '45px', borderRadius: 'var(--radius-md)', backgroundColor: '#FEF3C7', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                        <Bot size={22} color="#D97706" />
-                    </div>
-                    <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.35rem', color: 'var(--primary)' }}>
-                        Guía Cívica IA
-                    </h3>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
-                        Asistente conversacional para responder dudas inmediatas sobre trámites, rutas y contactos del cantón.
-                    </p>
-                </Link>
-
+            <div style={{ display: 'flex', gap: '1rem', fontSize: '0.78rem', color: '#475569', marginTop: '0.25rem' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                <Droplets size={13} color="#002B7F" /> Humedad: {weather ? `${weather.relative_humidity_2m}%` : '78%'}
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                <Wind size={13} color="#002B7F" /> Viento: {weather ? `${weather.wind_speed_10m} km/h` : '14 km/h'}
+              </span>
             </div>
-
+          </div>
+          <CloudSun size={42} color="#002B7F" />
         </div>
-    );
+
+        {/* Boletín Oficial Fijado */}
+        {pinnedBulletin && (
+          <div className="stitch-card" style={{ padding: '1.25rem', borderLeft: '4px solid #D97706', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', fontWeight: '800', color: '#D97706', textTransform: 'uppercase' }}>
+              <Megaphone size={14} /> Comunicado Oficial de la Junta Directiva
+            </div>
+            <h4 style={{ margin: '0.3rem 0 0.25rem 0', fontSize: '1rem', color: '#0F172A', fontWeight: '800' }}>
+              {pinnedBulletin.title}
+            </h4>
+            <p style={{ margin: 0, fontSize: '0.84rem', color: '#475569', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {pinnedBulletin.summary}
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* ACCESOS RÁPIDOS MUNICIPALES */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
+        gap: '1.25rem',
+        marginBottom: '2.5rem'
+      }}>
+        <Link to="/directorio" style={{ textDecoration: 'none' }} className="stitch-card quick-access-card">
+          <div style={{ padding: '1.5rem' }}>
+            <Store size={26} color="#002B7F" style={{ marginBottom: '0.75rem' }} />
+            <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0F172A', margin: '0 0 0.35rem 0' }}>Comercio Local</h3>
+            <p style={{ fontSize: '0.84rem', color: '#64748B', margin: 0 }}>Directorio con enlace a WhatsApp y ubicación GPS de negocios del distrito.</p>
+          </div>
+        </Link>
+
+        <Link to="/agenda" style={{ textDecoration: 'none' }} className="stitch-card quick-access-card">
+          <div style={{ padding: '1.5rem' }}>
+            <Bus size={26} color="#002B7F" style={{ marginBottom: '0.75rem' }} />
+            <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0F172A', margin: '0 0 0.35rem 0' }}>Transporte & Rutas</h3>
+            <p style={{ fontSize: '0.84rem', color: '#64748B', margin: 0 }}>Calculadora de tarifas ARESEP, frecuencias y cronograma de basura.</p>
+          </div>
+        </Link>
+
+        <Link to="/avisos" style={{ textDecoration: 'none' }} className="stitch-card quick-access-card">
+          <div style={{ padding: '1.5rem' }}>
+            <AlertTriangle size={26} color="#DC2626" style={{ marginBottom: '0.75rem' }} />
+            <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0F172A', margin: '0 0 0.35rem 0' }}>Avisos & Averías</h3>
+            <p style={{ fontSize: '0.84rem', color: '#64748B', margin: 0 }}>Monitor de cuadrillas AyA/CNFL con votación de afectación vecinal.</p>
+          </div>
+        </Link>
+
+        <Link to="/foro" style={{ textDecoration: 'none' }} className="stitch-card quick-access-card">
+          <div style={{ padding: '1.5rem' }}>
+            <MessageSquareWarning size={26} color="#D97706" style={{ marginBottom: '0.75rem' }} />
+            <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0F172A', margin: '0 0 0.35rem 0' }}>Tribuna Ciudadana</h3>
+            <p style={{ fontSize: '0.84rem', color: '#64748B', margin: 0 }}>Denuncias públicas vecinales moderadas por la ADI con debate comunitario.</p>
+          </div>
+        </Link>
+      </div>
+
+      {/* SECCIÓN DEL MAPA DISTRITAL GEOREFERENCIADO */}
+      <div style={{ marginBottom: '3rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
+          <div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#002B7F', fontWeight: '800', fontSize: '0.85rem' }}>
+              <ShieldCheck size={16} /> Sistema de Información Geográfica Comunal (SIG)
+            </div>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: '900', color: '#0F172A', margin: '0.2rem 0 0 0' }}>
+              Mapa Territorial Interactivo de San Juan de Dios
+            </h2>
+          </div>
+          <span style={{ fontSize: '0.82rem', color: '#64748B' }}>
+            Haga clic en los sectores delimitados o marcadores para ver cuadrillas y detalles
+          </span>
+        </div>
+
+        <EnvironmentalModule /> 
+        <CivicServicesWidget />
+        <DistrictMap 
+          notices={notices} 
+          businesses={businesses} 
+          landmarks={landmarks} 
+        />
+      </div>
+
+    </div>
+  );
 };
