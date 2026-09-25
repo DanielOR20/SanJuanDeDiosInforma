@@ -469,8 +469,11 @@ export const Avisos = () => {
 
         </div>
       )}
-{/* MÓDULO MODULAR: TRANSPARENCIA Y ACTAS */}
-      <TransparencyModule />
+
+      {/* MÓDULO MODULAR: TRANSPARENCIA Y ACTAS */}
+      <div style={{ marginTop: '3rem' }}>
+        <TransparencyModule />
+      </div>
     </div>
   );
 };

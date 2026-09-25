@@ -53,7 +53,7 @@ export const CategorizedDenunciationModule = () => {
   };
 
   return (
-    <section style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '2px solid var(--border)' }}>
+    <section style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '2px solid var(--border)' }}>
       
       {/* Cabecera */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
@@ -102,12 +102,13 @@ export const CategorizedDenunciationModule = () => {
           alignItems: 'center',
           justifyContent: 'center',
           padding: '1rem',
-          zIndex: 3500
+          zIndex: 5000,
+          backdropFilter: 'blur(2px)'
         }}>
-          <div className="stitch-card" style={{ width: '100%', maxWidth: '540px', padding: '1.75rem' }}>
+          <div className="stitch-card" style={{ width: '100%', maxWidth: '540px', padding: '1.75rem', backgroundColor: 'var(--surface)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.65rem' }}>
               <strong style={{ fontSize: '1.15rem', color: '#DC2626' }}>Formulario Formal de Denuncia</strong>
-              <button onClick={handleCloseModal} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748B' }}>
+              <button onClick={handleCloseModal} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
                 <X size={20} />
               </button>
             </div>
@@ -135,11 +136,11 @@ export const CategorizedDenunciationModule = () => {
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', marginBottom: '0.25rem' }}>Clasificación del Hecho *</label>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', marginBottom: '0.25rem', color: 'var(--text-main)' }}>Clasificación del Hecho *</label>
                   <select
                     value={formData.category}
                     onChange={e => setFormData({ ...formData, category: e.target.value })}
-                    style={{ width: '100%', padding: '0.55rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid var(--border)' }}
+                    style={{ width: '100%', padding: '0.6rem 0.85rem', fontSize: '0.85rem', borderRadius: '6px', border: '1px solid var(--border)', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)' }}
                   >
                     {categories.map(c => (
                       <option key={c.id} value={c.label}>{c.label}</option>
@@ -149,11 +150,11 @@ export const CategorizedDenunciationModule = () => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', marginBottom: '0.25rem' }}>Sector Distrital *</label>
+                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', marginBottom: '0.25rem', color: 'var(--text-main)' }}>Sector Distrital *</label>
                     <select
                       value={formData.sector}
                       onChange={e => setFormData({ ...formData, sector: e.target.value })}
-                      style={{ width: '100%', padding: '0.55rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid var(--border)' }}
+                      style={{ width: '100%', padding: '0.6rem 0.85rem', fontSize: '0.85rem', borderRadius: '6px', border: '1px solid var(--border)', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)' }}
                     >
                       <option value="San Juan Centro">San Juan Centro</option>
                       <option value="Sector Itaipú">Sector Itaipú</option>
@@ -163,27 +164,27 @@ export const CategorizedDenunciationModule = () => {
                   </div>
 
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', marginBottom: '0.25rem' }}>Dirección Exacta o Hito *</label>
+                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', marginBottom: '0.25rem', color: 'var(--text-main)' }}>Dirección Exacta o Hito *</label>
                     <input
                       type="text"
                       required
                       placeholder="Ej: 100m norte del parque..."
                       value={formData.locationExact}
                       onChange={e => setFormData({ ...formData, locationExact: e.target.value })}
-                      style={{ width: '100%', padding: '0.55rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid var(--border)' }}
+                      style={{ width: '100%', padding: '0.6rem 0.85rem', fontSize: '0.85rem', borderRadius: '6px', border: '1px solid var(--border)', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)' }}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', marginBottom: '0.25rem' }}>Descripción Detallada *</label>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', marginBottom: '0.25rem', color: 'var(--text-main)' }}>Descripción Detallada *</label>
                   <textarea
                     rows={3}
                     required
                     placeholder="Detalle la afectación, peligrosidad o daños observables..."
                     value={formData.description}
                     onChange={e => setFormData({ ...formData, description: e.target.value })}
-                    style={{ width: '100%', padding: '0.55rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid var(--border)', fontFamily: 'inherit' }}
+                    style={{ width: '100%', padding: '0.6rem 0.85rem', fontSize: '0.85rem', borderRadius: '6px', border: '1px solid var(--border)', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)', fontFamily: 'inherit' }}
                   />
                 </div>
 
@@ -201,13 +202,13 @@ export const CategorizedDenunciationModule = () => {
 
                 {!formData.isAnonymous && (
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', marginBottom: '0.25rem' }}>Nombre del Denunciante</label>
+                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', marginBottom: '0.25rem', color: 'var(--text-main)' }}>Nombre del Denunciante</label>
                     <input
                       type="text"
                       placeholder="Su nombre y apellidos..."
                       value={formData.citizenName}
                       onChange={e => setFormData({ ...formData, citizenName: e.target.value })}
-                      style={{ width: '100%', padding: '0.55rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid var(--border)' }}
+                      style={{ width: '100%', padding: '0.6rem 0.85rem', fontSize: '0.85rem', borderRadius: '6px', border: '1px solid var(--border)', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)' }}
                     />
                   </div>
                 )}
@@ -216,14 +217,14 @@ export const CategorizedDenunciationModule = () => {
                   <button
                     type="button"
                     onClick={handleCloseModal}
-                    style={{ padding: '0.5rem 1rem', borderRadius: '4px', border: '1px solid var(--border)', background: 'none', cursor: 'pointer', fontWeight: '700' }}
+                    style={{ padding: '0.6rem 1rem', borderRadius: '6px', border: '1px solid var(--border)', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)', cursor: 'pointer', fontWeight: '700' }}
                   >
                     Cancelar
                   </button>
                   <button
                     type="submit"
                     disabled={loading}
-                    style={{ padding: '0.5rem 1.25rem', borderRadius: '4px', border: 'none', backgroundColor: '#DC2626', color: '#FFFFFF', cursor: 'pointer', fontWeight: '800' }}
+                    style={{ padding: '0.6rem 1.25rem', borderRadius: '6px', border: 'none', backgroundColor: '#DC2626', color: '#FFFFFF', cursor: 'pointer', fontWeight: '800' }}
                   >
                     {loading ? 'Generando Folio...' : 'Radicar Denuncia'}
                   </button>

@@ -12,13 +12,13 @@ import { Foro } from '../pages/Foro';
 import { Asistente } from '../pages/Asistente';
 import { Admin } from '../pages/Admin';
 import { Login } from '../pages/Login';
+import { Juego } from '../pages/Juego';
 
 export const AppRoutes = () => {
   const { user } = useApp();
 
   return (
     <Routes>
-      {/* Contenedor principal con Layout (Navbar + Outlet + Footer) */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/directorio" element={<Directorio />} />
@@ -26,14 +26,13 @@ export const AppRoutes = () => {
         <Route path="/avisos" element={<Avisos />} />
         <Route path="/foro" element={<Foro />} />
         <Route path="/asistente" element={<Asistente />} />
+        <Route path="/juego" element={<Juego />} />
 
-        {/* Acceso Comunal: si ya inició sesión, se redirige según su rol */}
         <Route 
           path="/login" 
           element={user ? <Navigate to={user.role === 'admin' ? '/admin' : '/directorio'} replace /> : <Login />} 
         />
 
-        {/* Panel ADI protegido por rol administrativo */}
         <Route 
           path="/admin" 
           element={
@@ -43,7 +42,6 @@ export const AppRoutes = () => {
           } 
         />
 
-        {/* Ruta comodín para capturar direcciones no encontradas */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

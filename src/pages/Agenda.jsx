@@ -503,12 +503,15 @@ export const Agenda = () => {
                                 }}
                             >
                                 <CalendarPlus size={16} /> Agregar a mi Calendario
-                                <ZoningModule />
                             </a>
                         </div>
                     ))}
                 </div>
             )}
+
+            <div style={{ width: '100%', marginTop: '3rem' }}>
+                <ZoningModule />
+            </div>
 
         </div>
     );

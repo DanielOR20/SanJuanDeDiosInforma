@@ -53,7 +53,7 @@ export const ZoningSimulator = () => {
             <select
               value={sector}
               onChange={e => setSector(e.target.value)}
-              style={{ width: '100%', padding: '0.55rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid var(--border)', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)' }}
+              style={{ width: '100%', padding: '0.65rem 0.85rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid var(--border)', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)' }}
             >
               <option value="San Juan Centro">San Juan Centro</option>
               <option value="Sector Itaipú & Calabacitas">Sector Itaipú & Calabacitas</option>
@@ -67,7 +67,7 @@ export const ZoningSimulator = () => {
             <select
               value={activity}
               onChange={e => setActivity(e.target.value)}
-              style={{ width: '100%', padding: '0.55rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid var(--border)', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)' }}
+              style={{ width: '100%', padding: '0.65rem 0.85rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid var(--border)', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)' }}
             >
               <option value="Alimentación / Sodas">Alimentación / Panadería / Sodas</option>
               <option value="Pulperías / Abastecedores">Pulpería / Minisúper / Abarrotes</option>
@@ -80,7 +80,7 @@ export const ZoningSimulator = () => {
           <button
             type="submit"
             style={{
-              padding: '0.6rem 1.25rem',
+              padding: '0.65rem 1.25rem',
               backgroundColor: '#002B7F',
               color: '#FFFFFF',
               border: 'none',
@@ -91,8 +91,11 @@ export const ZoningSimulator = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '0.35rem'
+              gap: '0.4rem',
+              transition: 'background-color 0.2s ease'
             }}
+            onMouseOver={e => e.currentTarget.style.backgroundColor = '#001b57'}
+            onMouseOut={e => e.currentTarget.style.backgroundColor = '#002B7F'}
           >
             <span>Evaluar Viabilidad</span>
             <ArrowRight size={15} />
@@ -100,9 +103,10 @@ export const ZoningSimulator = () => {
         </form>
       ) : (
         <div style={{
-          padding: '1.25rem',
+          padding: '1.5rem',
           borderRadius: '6px',
-          border: `2px solid ${result.isAllowed ? '#059669' : '#DC2626'}`,
+          border: `1px solid ${result.isAllowed ? '#059669' : '#DC2626'}`,
+          borderLeft: `6px solid ${result.isAllowed ? '#059669' : '#DC2626'}`,
           backgroundColor: result.isAllowed ? 'rgba(5, 150, 105, 0.06)' : 'rgba(220, 38, 38, 0.06)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>

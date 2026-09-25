@@ -321,13 +321,14 @@ export const Foro = () => {
           right: 0,
           bottom: 0,
           backgroundColor: 'rgba(0,0,0,0.65)',
+          backdropFilter: 'blur(2px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           padding: '1rem',
-          zIndex: 3000
+          zIndex: 5000
         }}>
-          <div className="stitch-card" style={{ width: '100%', maxWidth: '540px', padding: '2rem', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div className="stitch-card" style={{ width: '100%', maxWidth: '540px', padding: '2rem', maxHeight: '90vh', overflowY: 'auto', backgroundColor: 'var(--surface)' }}>
             <h2 style={{ fontSize: '1.35rem', fontWeight: '800', margin: '0 0 0.5rem 0', color: 'var(--primary)' }}>
               Formular Denuncia Ciudadana
             </h2>

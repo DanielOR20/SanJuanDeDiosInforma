@@ -62,9 +62,9 @@ export const DenunciationTracker = () => {
           onChange={e => setFolioInput(e.target.value)}
           style={{
             flex: 1,
-            padding: '0.55rem 0.85rem',
+            padding: '0.6rem 0.85rem',
             fontSize: '0.85rem',
-            borderRadius: '4px',
+            borderRadius: '6px',
             border: '1px solid var(--border)',
             backgroundColor: 'var(--surface-subtle)',
             color: 'var(--text-main)'
@@ -77,8 +77,8 @@ export const DenunciationTracker = () => {
             backgroundColor: '#002B7F',
             color: '#FFFFFF',
             border: 'none',
-            padding: '0.55rem 1.15rem',
-            borderRadius: '4px',
+            padding: '0.6rem 1.15rem',
+            borderRadius: '6px',
             fontSize: '0.82rem',
             fontWeight: '700',
             cursor: 'pointer',
@@ -114,7 +114,7 @@ export const DenunciationTracker = () => {
             })()}
           </div>
 
-          <div style={{ fontSize: '0.78rem', color: '#64748B', marginBottom: '0.5rem' }}>
+          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
             Sector: <strong>{result.sector}</strong> ({result.locationExact}) • Registrado: {result.date}
           </div>
 

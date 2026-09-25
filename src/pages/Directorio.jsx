@@ -405,10 +405,11 @@ export const Directorio = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    zIndex: 100,
+                    zIndex: 5000,
+                    backdropFilter: 'blur(2px)',
                     padding: '1rem'
                 }}>
-                    <div className="stitch-card" style={{ width: '100%', maxWidth: '540px', padding: '2rem', position: 'relative' }}>
+                    <div className="stitch-card" style={{ width: '100%', maxWidth: '540px', padding: '2rem', position: 'relative', backgroundColor: 'var(--surface)' }}>
                         <button
                             onClick={() => setShowModal(false)}
                             style={{ position: 'absolute', top: '1.25rem', right: '1.25rem', background: 'none', border: 'none', color: 'var(--text-muted)' }}
@@ -507,10 +508,13 @@ export const Directorio = () => {
                             </div>
                         </form>
                     </div>
-                    <CommunityJobsWidget />
                 </div>
             )}
 
+            {/* SECCIÓN DE EMPLEO COMUNITARIO */}
+            <div style={{ marginTop: '3rem' }}>
+                <CommunityJobsWidget />
+            </div>
         </div>
     );
 };

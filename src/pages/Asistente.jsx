@@ -1,329 +1,345 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
+import { useApp } from '../context/AppContext';
+import { createSupportTicket } from '../services/api';
 import { 
   Bot, 
   Send, 
   User, 
-  Sparkles, 
-  HelpCircle, 
-  Compass, 
-  Trash2, 
-  Bus, 
-  PhoneCall 
+  LifeBuoy, 
+  CheckCircle2, 
+  Clock, 
+  Sparkles,
+  ArrowRight
 } from 'lucide-react';
 
 export const Asistente = () => {
+  const { user } = useApp();
   const [messages, setMessages] = useState([
     {
-      id: 1,
       sender: 'bot',
-      text: '¡Hola, vecino! 👋 Soy el Guía Vecinal inteligente de San Juan de Dios. ¿En qué te puedo ayudar hoy? Puedes preguntarme por horarios de buses, días de reciclaje, emergencias o comercios locales.'
+      text: '¡Hola! Soy la Guía Virtual del Distrito 03 San Juan de Dios. Puedo orientarle sobre horarios de buses, recolección de basura, requisitos de trámites para el Salón Comunal o registrar un reporte formal para la Junta Directiva de la ADI. ¿En qué le colaboro hoy?'
     }
   ]);
   const [input, setInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const chatEndRef = useRef(null);
+  const [loading, setLoading] = useState(false);
 
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  // Modal para elevar a Ticket
+  const [showTicketModal, setShowTicketModal] = useState(false);
+  const [ticketSubject, setTicketSubject] = useState('');
+  const [ticketSector, setTicketSector] = useState('San Juan Centro');
+  const [ticketMessage, setTicketMessage] = useState('');
+  const [ticketSuccess, setTicketSuccess] = useState(null);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping]);
+  const handleSend = async (e) => {
+    e.preventDefault();
+    const query = input.trim();
+    if (!query) return;
 
-  // Base de conocimiento local / heurística para responder con precisión de San Juan de Dios
-  const generateBotReply = (query) => {
-    const q = query.toLowerCase();
-
-    if (q.includes('bus') || q.includes('transporte') || q.includes('horario') || q.includes('poas')) {
-      return '🚌 **Transporte en San Juan de Dios:**\n- **San Juan ⇄ San José Centro:** Servicio cada 10-15 min. Primera salida: 4:45 AM, última: 10:45 PM. Pasaje aprox: ₡340.\n- **Poás ⇄ San Juan:** Frecuencia cada 25 min desde las 5:15 AM.\n- **Interlínea:** Opera de lunes a viernes en horas pico conectando con Desamparados Centro y Moravia.';
-    }
-
-    if (q.includes('basura') || q.includes('reciclaje') || q.includes('recoleccion') || q.includes('desechos')) {
-      return '♻️ **Cronograma de Aseo y Residuos:**\n- **San Juan Centro:** Basura ordinaria los martes y viernes (6:00 AM). Reciclaje el 2do y 4to jueves del mes.\n- **Calle Fallas:** Basura lunes y jueves. Reciclaje 1er y 3er miércoles.\n- Recuerda sacar tus bolsas bien cerradas la mañana del servicio.';
-    }
-
-    if (q.includes('emergencia') || q.includes('policia') || q.includes('bomberos') || q.includes('ebais') || q.includes('cruz roja')) {
-      return '🚨 **Contactos de Emergencia Inmediata:**\n- **Fuerza Pública (San Juan):** 2259-0111\n- **Bomberos Desamparados:** 2259-2020\n- **EBAIS San Juan de Dios:** 2250-4560\n- **Cruz Roja Desamparados:** 2259-8080\n- Para riesgo inminente de vida, marca siempre al **9-1-1**.';
-    }
-
-    if (q.includes('panaderia') || q.includes('taller') || q.includes('comercio') || q.includes('negocio') || q.includes('comida')) {
-      return '🏪 **Comercios destacados en el Directorio:**\n- **Panadería Doña Rosa:** 100m Este del Parque Central (Tel: 2259-3344).\n- **Taller Mecánico Central:** Calle Fallas, 250m Sur (Tel: 2250-9988).\nConsulta la sección de **Comercios** para chatear directamente por WhatsApp con ellos.';
-    }
-
-    if (q.includes('zumba') || q.includes('banda') || q.includes('evento') || q.includes('actividad')) {
-      return '🎉 **Actividades Comunitarias Próximas:**\n- **Clases de Zumba:** Lunes y Miércoles 6:00 PM en el Salón Comunal (₡2.000 por clase).\n- **Banda Municipal:** Ensayo abierto este viernes a las 7:00 PM en la Plaza de Deportes.\n¡Puedes agregarlos a tu Google Calendar desde la pestaña de **Agenda**!';
-    }
-
-    if (q.includes('reportar') || q.includes('averia') || q.includes('agua') || q.includes('hueco') || q.includes('luz')) {
-      return '🚧 **¿Quieres reportar un problema comunal?**\nPuedes ingresar a la pestaña **Avisos** y presionar el botón azul **"Publicar Reporte / Aviso"** para que los vecinos y la ADI estén enterados del incidente en tu sector.';
-    }
-
-    return 'Entendido, vecino. Para esa consulta específica te sugiero revisar las pestañas de **Comercios**, **Agenda & Servicios** o el tablón de **Avisos**. También puedes comunicarte directamente con la Asociación de Desarrollo Integral (ADI). ¿Deseas consultar sobre buses, reciclaje, emergencias o eventos?';
-  };
-
-  const handleSend = (textToSend = input) => {
-    if (!textToSend.trim()) return;
-
-    const userMessage = {
-      id: Date.now(),
-      sender: 'user',
-      text: textToSend
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
+    const userMsg = { sender: 'user', text: query };
+    const currentMessages = [...messages, userMsg];
+    setMessages(currentMessages);
     setInput('');
-    setIsTyping(true);
+    setLoading(true);
 
-    // Simulamos respuesta con procesamiento fluido
-    setTimeout(() => {
-      const replyText = generateBotReply(textToSend);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 1,
-          sender: 'bot',
-          text: replyText
-        }
+    try {
+      const [businesses, notices, landmarks, bulletins] = await Promise.all([
+        import('../services/api').then(m => m.getBusinesses()),
+        import('../services/api').then(m => m.getNotices()),
+        import('../services/api').then(m => m.getLandmarks()),
+        import('../services/api').then(m => m.getBulletins())
       ]);
-      setIsTyping(false);
-    }, 700);
+
+      const businessContext = businesses.map(b => `${b.name} (${b.category}): ${b.address}, Tel: ${b.phone}`).join('. ');
+      const noticesContext = notices.map(n => `${n.title} - ${n.description} (${n.date})`).join('. ');
+      const landmarksContext = landmarks.map(l => `${l.name}: ${l.description}`).join('. ');
+      
+      const systemContext = `Eres la Guía Virtual del Distrito 03 San Juan de Dios. Eres costarricense, educado, servicial y mantienes un tono natural ("Con gusto le colaboro", "Le comento"). 
+NUNCA digas que no cuentas con directorio comercial o de servicios. Usa obligatoriamente esta información local verificada para responder:
+- Directorio de Comercios: ${businessContext}.
+- Avisos de la Comunidad (AyA/CNFL, etc): ${noticesContext}.
+- Sitios de Interés: ${landmarksContext}.
+- Transporte: El pasaje de bus oficial cuesta ₡385.
+- Basura: Recolección ordinaria los Lunes y Jueves, reciclaje 2do y 4to miércoles del mes.
+
+Responde basándote en estos datos si te preguntan por panaderías, talleres, pulperías, u otras consultas locales.`;
+
+      const apiMessages = [
+        { role: "system", content: systemContext },
+        ...currentMessages.map(m => ({
+          role: m.sender === 'user' ? 'user' : 'assistant',
+          content: m.text
+        }))
+      ];
+
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer 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",
+          "HTTP-Referer": window.location.href,
+          "X-Title": "Guia San Juan de Dios",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "model": "openrouter/auto",
+          "messages": apiMessages
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error en la respuesta de la API');
+      }
+
+      const data = await response.json();
+      const botReply = data.choices[0].message.content;
+      
+      setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
+    } catch (error) {
+      console.error("Error al conectar con OpenRouter:", error);
+      setMessages(prev => [...prev, { sender: 'bot', text: 'Lo siento, en este momento no puedo conectarme al servicio de inteligencia artificial. Intente de nuevo más tarde.' }]);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const quickPrompts = [
-    { label: '🚌 Horarios de Buses a San José', query: '¿Cuáles son los horarios de buses a San José?' },
-    { label: '♻️ Días de Reciclaje', query: '¿Qué días pasa el reciclaje y la basura en San Juan?' },
-    { label: '🚨 Teléfonos de Emergencia', query: 'Dame los números de emergencia de la policía y bomberos' },
-    { label: '🕺 Clases de Zumba y Banda', query: '¿Cuándo son las clases de Zumba y los ensayos de la banda?' }
-  ];
+  const handleCreateTicketSubmit = async (e) => {
+    e.preventDefault();
+    if (!ticketSubject.trim() || !ticketMessage.trim()) return;
+
+    try {
+      const newTicket = await createSupportTicket({
+        residentName: user?.name || 'Vecino de San Juan',
+        email: user?.email || 'vecino@sanjuan.cr',
+        sector: ticketSector,
+        subject: ticketSubject.trim(),
+        message: ticketMessage.trim()
+      });
+
+      setTicketSuccess(newTicket.ticketNumber);
+      setTimeout(() => {
+        setTicketSuccess(null);
+        setShowTicketModal(false);
+        setTicketSubject('');
+        setTicketMessage('');
+      }, 3000);
+    } catch (err) {
+      alert('Error al enviar el ticket');
+    }
+  };
 
   return (
-    <div className="stitch-container" style={{ paddingBottom: '3rem', marginTop: '2rem' }}>
+    <div className="stitch-container" style={{ padding: '2rem 1rem 4rem 1rem', maxWidth: '850px' }}>
       
       {/* Encabezado */}
-      <div style={{ marginBottom: '1.5rem', textAlign: 'center' }}>
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          backgroundColor: 'var(--primary-light)',
-          color: 'var(--primary)',
-          padding: '0.35rem 0.85rem',
-          borderRadius: 'var(--radius-full)',
-          fontSize: '0.85rem',
-          fontWeight: '700',
-          marginBottom: '0.5rem'
-        }}>
-          <Sparkles size={16} /> Asistencia Cívica Inteligente
-        </div>
-        <h1 style={{ color: 'var(--primary)', fontSize: '2rem', fontWeight: '800', marginBottom: '0.4rem' }}>
-          Guía Vecinal San Juan de Dios
-        </h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: '600px', margin: '0 auto' }}>
-          Consulte al instante horarios de transporte, cronogramas de servicios comunales, comercios de barrio y rutas de atención.
-        </p>
-      </div>
-
-      {/* Tarjeta del Chat */}
-      <div className="stitch-card" style={{ 
-        maxWidth: '800px', 
-        margin: '0 auto', 
-        height: '620px', 
-        display: 'flex', 
-        flexDirection: 'column',
-        overflow: 'hidden'
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '1rem',
+        marginBottom: '1.5rem',
+        paddingBottom: '1rem',
+        borderBottom: '2px solid var(--border)'
       }}>
-        
-        {/* Cabecera del chat */}
-        <div style={{
-          padding: '1rem 1.5rem',
-          backgroundColor: 'var(--primary)',
-          color: '#FFFFFF',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              backgroundColor: 'rgba(255,255,255,0.2)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <Bot size={22} color="#FCD34D" />
-            </div>
-            <div>
-              <div style={{ fontWeight: '700', fontSize: '1rem' }}>Asistente Virtual ADI</div>
-              <div style={{ fontSize: '0.75rem', opacity: 0.85 }}>En línea • Distrito 03 Desamparados</div>
-            </div>
+        <div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#002B7F', fontWeight: '800', fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+            <Sparkles size={16} /> Asistente Cívico Inteligente
           </div>
-          <span className="badge badge-success" style={{ backgroundColor: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none' }}>
-            IA Activa
-          </span>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: '900', color: '#0F172A', margin: 0 }}>
+            Guía Virtual San Juan de Dios
+          </h1>
         </div>
 
-        {/* Zona de Mensajes */}
-        <div style={{
-          flex: 1,
-          padding: '1.25rem',
-          overflowY: 'auto',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-          backgroundColor: 'var(--bg)'
-        }}>
-          {messages.map((msg) => {
-            const isBot = msg.sender === 'bot';
-            return (
-              <div 
-                key={msg.id} 
-                style={{
-                  display: 'flex',
-                  justifyContent: isBot ? 'flex-start' : 'flex-end',
-                  gap: '0.5rem'
-                }}
-              >
-                {isBot && (
-                  <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    backgroundColor: 'var(--primary)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#fff',
-                    flexShrink: 0,
-                    marginTop: '0.2rem'
-                  }}>
-                    <Bot size={18} />
-                  </div>
-                )}
-
-                <div style={{
-                  maxWidth: '78%',
-                  padding: '0.85rem 1.15rem',
-                  borderRadius: '14px',
-                  fontSize: '0.92rem',
-                  lineHeight: '1.45',
-                  whiteSpace: 'pre-line',
-                  backgroundColor: isBot ? 'var(--surface)' : 'var(--primary)',
-                  color: isBot ? 'var(--text-main)' : '#FFFFFF',
-                  boxShadow: 'var(--shadow-sm)',
-                  border: isBot ? '1px solid var(--border)' : 'none'
-                }}>
-                  {msg.text}
-                </div>
-
-                {!isBot && (
-                  <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    backgroundColor: 'var(--surface-subtle)',
-                    border: '1px solid var(--border)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                    marginTop: '0.2rem'
-                  }}>
-                    <User size={16} color="var(--text-muted)" />
-                  </div>
-                )}
-              </div>
-            );
-          })}
-
-          {isTyping && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-              <Bot size={16} /> Consultando base comunal...
-            </div>
-          )}
-          <div ref={chatEndRef} />
-        </div>
-
-        {/* Sugerencias Rápidas */}
-        <div style={{
-          padding: '0.65rem 1rem',
-          backgroundColor: 'var(--surface)',
-          borderTop: '1px solid var(--border)',
-          display: 'flex',
-          gap: '0.5rem',
-          overflowX: 'auto',
-          whiteSpace: 'nowrap'
-        }}>
-          {quickPrompts.map((p, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleSend(p.query)}
-              style={{
-                fontSize: '0.78rem',
-                fontWeight: '600',
-                padding: '0.4rem 0.75rem',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--surface-subtle)',
-                color: 'var(--text-main)',
-                border: '1px solid var(--border)',
-                cursor: 'pointer'
-              }}
-            >
-              {p.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Input de Envío */}
-        <form 
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSend();
-          }}
+        <button
+          onClick={() => setShowTicketModal(true)}
           style={{
-            padding: '1rem',
-            backgroundColor: 'var(--surface)',
-            borderTop: '1px solid var(--border)',
             display: 'flex',
-            gap: '0.75rem'
+            alignItems: 'center',
+            gap: '0.45rem',
+            backgroundColor: '#002B7F',
+            color: 'white',
+            border: 'none',
+            padding: '0.6rem 1.1rem',
+            borderRadius: '4px',
+            fontWeight: '700',
+            fontSize: '0.85rem',
+            cursor: 'pointer'
           }}
         >
-          <input 
+          <LifeBuoy size={16} /> Elevar a Ticket ADI
+        </button>
+      </div>
+
+      {/* Ventana de Conversación */}
+      <div className="stitch-card" style={{
+        minHeight: '480px',
+        maxHeight: '600px',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '1.25rem'
+      }}>
+        <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem', paddingRight: '0.5rem' }}>
+          {messages.map((m, idx) => (
+            <div
+              key={idx}
+              style={{
+                display: 'flex',
+                gap: '0.75rem',
+                alignSelf: m.sender === 'user' ? 'flex-end' : 'flex-start',
+                maxWidth: '85%'
+              }}
+            >
+              {m.sender === 'bot' && (
+                <div style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#E0E7FF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#002B7F', flexShrink: 0 }}>
+                  <Bot size={20} />
+                </div>
+              )}
+              <div style={{
+                backgroundColor: m.sender === 'user' ? '#002B7F' : '#F1F5F9',
+                color: m.sender === 'user' ? '#FFFFFF' : '#0F172A',
+                padding: '0.85rem 1.15rem',
+                borderRadius: '8px',
+                fontSize: '0.9rem',
+                lineHeight: 1.5
+              }}>
+                {m.text}
+              </div>
+              {m.sender === 'user' && (
+                <div style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#002B7F', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
+                  <User size={20} />
+                </div>
+              )}
+            </div>
+          ))}
+          {loading && (
+            <div style={{ alignSelf: 'flex-start', color: '#64748B', fontSize: '0.85rem', fontStyle: 'italic', paddingLeft: '3rem' }}>
+              Consultando base distrital...
+            </div>
+          )}
+        </div>
+
+        {/* Input */}
+        <form onSubmit={handleSend} style={{ display: 'flex', gap: '0.5rem', marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid #E2E8F0' }}>
+          <input
             type="text"
-            placeholder="Pregunte algo sobre San Juan de Dios (ej: ¿A qué hora pasa el bus a Poás?)..."
+            placeholder="Pregunte sobre horarios de buses, recolección o trámites..."
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={e => setInput(e.target.value)}
             style={{
               flex: 1,
-              padding: '0.75rem 1rem',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-strong)',
-              backgroundColor: 'var(--bg)',
-              color: 'var(--text-main)',
-              fontFamily: 'inherit',
-              fontSize: '0.95rem'
+              padding: '0.7rem 1rem',
+              borderRadius: '4px',
+              border: '1px solid #CBD5E1',
+              fontSize: '0.9rem'
             }}
           />
-          <button 
+          <button
             type="submit"
             style={{
-              backgroundColor: 'var(--primary)',
-              color: '#FFFFFF',
-              padding: '0.75rem 1.25rem',
-              borderRadius: 'var(--radius-md)',
+              backgroundColor: '#002B7F',
+              color: 'white',
+              border: 'none',
+              padding: '0.7rem 1.25rem',
+              borderRadius: '4px',
               fontWeight: '700',
+              cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.5rem'
+              gap: '0.4rem'
             }}
           >
-            <Send size={18} />
+            <Send size={16} />
           </button>
         </form>
-
       </div>
+
+      {/* MODAL DE TICKET FORMAL */}
+      {showTicketModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.65)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '1rem',
+          zIndex: 3000
+        }}>
+          <div className="stitch-card" style={{ width: '100%', maxWidth: '520px', padding: '2rem' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: '800', margin: '0 0 0.4rem 0', color: '#002B7F' }}>
+              Elevar Solicitud a la Junta Directiva
+            </h2>
+            <p style={{ fontSize: '0.84rem', color: '#64748B', margin: '0 0 1.25rem 0' }}>
+              Genera una boleta con número de caso para ser conocida en sesión ordinaria de la ADI.
+            </p>
+
+            {ticketSuccess ? (
+              <div style={{ padding: '1.5rem', textAlign: 'center', backgroundColor: '#DCFCE7', color: '#166534', borderRadius: '4px', fontWeight: '700' }}>
+                <CheckCircle2 size={36} style={{ margin: '0 auto 0.5rem auto' }} />
+                Ticket registrado con éxito: <strong>{ticketSuccess}</strong>. Se le notificará al correo registrado.
+              </div>
+            ) : (
+              <form onSubmit={handleCreateTicketSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', marginBottom: '0.25rem' }}>Asunto</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Ej: Petición de bacheo o limpieza comunal"
+                    value={ticketSubject}
+                    onChange={e => setTicketSubject(e.target.value)}
+                    style={{ width: '100%', padding: '0.55rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid #CBD5E1' }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', marginBottom: '0.25rem' }}>Sector Distrital</label>
+                  <select
+                    value={ticketSector}
+                    onChange={e => setTicketSector(e.target.value)}
+                    style={{ width: '100%', padding: '0.55rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid #CBD5E1' }}
+                  >
+                    <option value="San Juan Centro">San Juan Centro</option>
+                    <option value="Calle Fallas">Calle Fallas</option>
+                    <option value="Sector Poás">Sector Poás</option>
+                    <option value="Plaza de Deportes / Salón">Plaza de Deportes / Salón</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', marginBottom: '0.25rem' }}>Mensaje o Detalle</label>
+                  <textarea
+                    rows={4}
+                    required
+                    placeholder="Escriba su consulta o petición formal..."
+                    value={ticketMessage}
+                    onChange={e => setTicketMessage(e.target.value)}
+                    style={{ width: '100%', padding: '0.55rem', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid #CBD5E1', fontFamily: 'inherit' }}
+                  />
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginTop: '0.5rem' }}>
+                  <button
+                    type="button"
+                    onClick={() => setShowTicketModal(false)}
+                    style={{ padding: '0.55rem 1rem', borderRadius: '4px', border: '1px solid #CBD5E1', background: 'none', cursor: 'pointer', fontWeight: '700' }}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    style={{ padding: '0.55rem 1.25rem', borderRadius: '4px', border: 'none', backgroundColor: '#002B7F', color: 'white', cursor: 'pointer', fontWeight: '700' }}
+                  >
+                    Emitir Ticket
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
 
     </div>
   );

@@ -151,8 +151,13 @@ export const Home = () => {
         </Link>
       </div>
 
+      {/* VENTANILLA DISTRITAL */}
+      <div style={{ marginBottom: '2.5rem' }}>
+        <CivicServicesWidget />
+      </div>
+
       {/* SECCIÓN DEL MAPA DISTRITAL GEOREFERENCIADO */}
-      <div style={{ marginBottom: '3rem' }}>
+      <div style={{ marginBottom: '2.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
           <div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#002B7F', fontWeight: '800', fontSize: '0.85rem' }}>
@@ -167,13 +172,16 @@ export const Home = () => {
           </span>
         </div>
 
-        <EnvironmentalModule /> 
-        <CivicServicesWidget />
         <DistrictMap 
           notices={notices} 
           businesses={businesses} 
           landmarks={landmarks} 
         />
+      </div>
+
+      {/* GESTIÓN AMBIENTAL & PUNTOS LIMPIOS */}
+      <div style={{ marginTop: '3rem' }}>
+        <EnvironmentalModule /> 
       </div>
 
     </div>
