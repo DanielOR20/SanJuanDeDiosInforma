@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getBusinesses, createBusiness, getLandmarks } from '../services/api';
 import { ComunidadMap } from '../components/ComunidadMap';
+import { CommunityJobsWidget } from '../components/jobs/CommunityJobsWidget';
 import {
     Search,
     MapPin,
@@ -506,6 +507,7 @@ export const Directorio = () => {
                             </div>
                         </form>
                     </div>
+                    <CommunityJobsWidget />
                 </div>
             )}
 

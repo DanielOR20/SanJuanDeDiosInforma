@@ -354,3 +354,25 @@ export const getEmergencyContacts = async () => {
   if (!res.ok) throw new Error('Error al obtener contactos de emergencia');
   return res.json();
 };
+
+// --- MÓDULO MODULAR: BOLSA DE EMPLEO Y OFICIOS VECINALES ---
+
+export const getCommunityJobs = async () => {
+  const res = await fetch(`${BASE_URL}/communityJobs`);
+  if (!res.ok) throw new Error('Error al obtener la bolsa de empleo');
+  return res.json();
+};
+
+export const createCommunityJob = async (jobData) => {
+  const payload = {
+    ...jobData,
+    date: new Date().toISOString().split('T')[0]
+  };
+  const res = await fetch(`${BASE_URL}/communityJobs`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error('Error al publicar vacante u oficio');
+  return res.json();
+};

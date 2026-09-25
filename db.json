@@ -450,5 +450,47 @@
       "type": "comite",
       "location": "Oficinas Salón Comunal ADI"
     }
+  ],
+
+"communityJobs": [
+    {
+      "id": "1",
+      "title": "Ayudante de Panadería / Empaque",
+      "businessName": "Panadería & Repostería Itaipú",
+      "sector": "Sector Itaipú",
+      "type": "Empleo Comercial",
+      "schedule": "Tiempo Completo (Madrugadas)",
+      "salary": "₡360,000 / mes + extras",
+      "description": "Se solicita colaborador con carné de manipulación de alimentos al día para empaque, despacho y apoyo en elaboración.",
+      "contactPhone": "8777-3344",
+      "contactType": "whatsapp",
+      "date": "2026-09-24"
+    },
+    {
+      "id": "2",
+      "title": "Servicios de Jardinería y Mantenimiento de Lotes",
+      "businessName": "Don Chepe (Vecino Independiente)",
+      "sector": "San Juan Centro",
+      "type": "Oficio Vecinal",
+      "schedule": "Por Horas / Fines de Semana",
+      "salary": "A convenir según área",
+      "description": "Chapea de lotes con orilladora propia, poda de setos, recolección de ramas y mantenimiento de jardines en todo el distrito.",
+      "contactPhone": "8812-4455",
+      "contactType": "phone",
+      "date": "2026-09-22"
+    },
+    {
+      "id": "3",
+      "title": "Mecánico Automotriz Ligero / Frenos",
+      "businessName": "Taller Mecánico El Cruce",
+      "sector": "Sector Calle Máquinas",
+      "type": "Empleo Comercial",
+      "schedule": "Lunes a Sábado",
+      "salary": "₡420,000 / mes",
+      "description": "Se busca mecánico con experiencia comprobada en suspensión, frenos y cambios de aceite para atención de vehículos livianos.",
+      "contactPhone": "8999-7788",
+      "contactType": "whatsapp",
+      "date": "2026-09-20"
+    }
   ]
 }
