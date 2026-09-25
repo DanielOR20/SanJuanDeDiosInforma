@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { ZoningModule } from '../components/zoning/ZoningModule';
 import {
     Bus,
     Trash2,
@@ -502,6 +503,7 @@ export const Agenda = () => {
                                 }}
                             >
                                 <CalendarPlus size={16} /> Agregar a mi Calendario
+                                <ZoningModule />
                             </a>
                         </div>
                     ))}

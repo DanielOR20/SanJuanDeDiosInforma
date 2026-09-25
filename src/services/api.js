@@ -376,3 +376,17 @@ export const createCommunityJob = async (jobData) => {
   if (!res.ok) throw new Error('Error al publicar vacante u oficio');
   return res.json();
 };
+
+// --- MÓDULO MODULAR: ZONIFICACIÓN Y OBRA MENOR ---
+
+export const getZoningRules = async () => {
+  const res = await fetch(`${BASE_URL}/zoningRules`);
+  if (!res.ok) throw new Error('Error al obtener reglas de zonificación');
+  return res.json();
+};
+
+export const getMinorWorkRules = async () => {
+  const res = await fetch(`${BASE_URL}/minorWorkRules`);
+  if (!res.ok) throw new Error('Error al obtener normativas de obra menor');
+  return res.json();
+};

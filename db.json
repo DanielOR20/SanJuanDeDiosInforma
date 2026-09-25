@@ -492,5 +492,61 @@
       "contactType": "whatsapp",
       "date": "2026-09-20"
     }
+  ],
+  "zoningRules": [
+    {
+      "sector": "San Juan Centro",
+      "zoneType": "Comercial Mixta ZC-1",
+      "allowedActivities": ["Comercio General", "Alimentación / Sodas", "Servicios Profesionales", "Talleres Menores"],
+      "restrictions": "No se permiten talleres pesados ni centros de eventos con emisiones sonoras nocturnas no confinadas.",
+      "requirements": ["Visto bueno de ubicación de la ADI", "Permiso Sanitario de Funcionamiento (Ministerio de Salud)", "Croquis de fachada con rótulo"]
+    },
+    {
+      "sector": "Sector Itaipú & Calabacitas",
+      "zoneType": "Residencial de Media Densidad ZR-2",
+      "allowedActivities": ["Pulperías / Abastecedores", "Barberías / Salones de Belleza", "Bazar / Librería"],
+      "restrictions": "Máximo 40 m² dedicados al comercio en casa de habitación. No se autorizan licores de barra.",
+      "requirements": ["Firma de no afectación de vecinos colindantes (formulario ADI)", "Inspección de uso residencial-comercial"]
+    },
+    {
+      "sector": "Sector Pedrito Monge",
+      "zoneType": "Residencial Mixta ZR-M",
+      "allowedActivities": ["Comercio Vecinal", "Venta de Pan / Repostería", "Artesanías"],
+      "restrictions": "Debe contar con retiro frontal reglamentario para carga y descarga.",
+      "requirements": ["Comprobante de disponibilidad de agua AyA", "Aprobación de la Junta Directiva"]
+    },
+    {
+      "sector": "Sector Calle Máquinas",
+      "zoneType": "Comercial Industrial Ligera ZI-1",
+      "allowedActivities": ["Talleres Mecánicos", "Bodegas de Distribución", "Ferreterías", "Servicios Automotrices"],
+      "restrictions": "Obligatorio contar con trampa de grasas y manejo de desechos según ley ambiental.",
+      "requirements": ["Plan de manejo de residuos peligrosos", "Inspección de Bomberos / Salud", "Permiso de descarga pluvial"]
+    }
+  ],
+  "minorWorkRules": [
+    {
+      "id": "1",
+      "workType": "Construcción o Reparación de Aceras (Ley 7600)",
+      "limit": "Hasta 30 metros lineales",
+      "permitType": "Exento de plano formal / Trámite Comunal Expedito",
+      "specs": "Pendiente transversal máxima 2%, ancho libre mínimo 1.20m, superficie antideslizante con rampa de acceso.",
+      "docs": ["Fotocopia de cédula", "Foto del estado actual de la calzada", "Boleta de alineamiento"]
+    },
+    {
+      "id": "2",
+      "workType": "Tapia Frontal o Perimetral Liviana",
+      "limit": "Altura máxima 2.50 metros",
+      "permitType": "Licencia de Obra Menor ADI-Muni",
+      "specs": "Debe respetar el alineamiento de la Vía 217 o servidumbre cantonal sin invadir cordón de caño.",
+      "docs": ["Croquis acotado simple", "Certificación de propiedad o derecho de posesión", "Constancia de vecindad al día"]
+    },
+    {
+      "id": "3",
+      "workType": "Cambio de Cubierta de Techo y Canales",
+      "limit": "Sin alteración estructural de cerchas",
+      "permitType": "Comunicación Previa de Mantenimiento",
+      "specs": "Manejo adecuado de aguas pluviales hacia cordón de caño sin desaguar hacia propiedades vecinas.",
+      "docs": ["Formulario de mantenimiento de vivienda", "Constancia de no adeudo comunal"]
+    }
   ]
 }
