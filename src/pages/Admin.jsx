@@ -62,6 +62,13 @@ import {
     Legend
 } from 'recharts';
 
+import AdminMarketplaceTab from './adminTabs/AdminMarketplaceTab';
+import AdminFiscalizationTab from './adminTabs/AdminFiscalizationTab';
+import AdminJobsTab from './adminTabs/AdminJobsTab';
+import AdminReelsTab from './adminTabs/AdminReelsTab';
+import AdminActasTab from './adminTabs/AdminActasTab';
+import AdminPetsAlertsTab from './adminTabs/AdminPetsAlertsTab';
+
 export const Admin = () => {
     const { user } = useApp();
     const [activeTab, setActiveTab] = useState('kpis');
@@ -508,7 +515,13 @@ export const Admin = () => {
                     { id: 'budgetTab', label: 'Presupuesto ADI', icon: BarChart3, count: null },
                     { id: 'users', label: 'Padrón Vecinal', icon: Users, count: usersList.length, badgeColor: '#64748B' },
                     { id: 'bulletins', label: 'Boletines Oficiales', icon: Megaphone, count: bulletins.length, badgeColor: '#64748B' },
-                    { id: 'audit', label: 'Bitácora de Auditoría', icon: History, count: auditLogs.length, badgeColor: '#64748B' }
+                    { id: 'audit', label: 'Bitácora de Auditoría', icon: History, count: auditLogs.length, badgeColor: '#64748B' },
+                    { id: 'marketplaceAdmin', label: 'Mercadito Comunal', icon: Store, count: null, badgeColor: '#002B7F' },
+                    { id: 'fiscalizationAdmin', label: 'Fiscalización & Denuncias', icon: ShieldCheck, count: null, badgeColor: '#002B7F' },
+                    { id: 'jobsAdmin', label: 'Bolsa de Empleo', icon: Users, count: null, badgeColor: '#002B7F' },
+                    { id: 'reelsAdmin', label: 'Moderación Reels', icon: CheckCircle2, count: null, badgeColor: '#002B7F' },
+                    { id: 'actasAdmin', label: 'Presupuesto y Actas', icon: FileSpreadsheet, count: null, badgeColor: '#002B7F' },
+                    { id: 'petsAlertsAdmin', label: 'Seguridad & Mascotas', icon: ShieldCheck, count: null, badgeColor: '#DC2626' }
                 ].map(tab => {
                     const Icon = tab.icon;
                     const isActive = activeTab === tab.id;
@@ -1295,6 +1308,17 @@ export const Admin = () => {
                     </div>
                 </div>
             )}
+
+
+            {/* ========================================== */}
+            {/* 5 NUEVAS PESTAÑAS (MODULOS ADI)            */}
+            {/* ========================================== */}
+            {activeTab === 'marketplaceAdmin' && <AdminMarketplaceTab />}
+            {activeTab === 'fiscalizationAdmin' && <AdminFiscalizationTab />}
+            {activeTab === 'jobsAdmin' && <AdminJobsTab />}
+            {activeTab === 'reelsAdmin' && <AdminReelsTab />}
+            {activeTab === 'actasAdmin' && <AdminActasTab />}
+            {activeTab === 'petsAlertsAdmin' && <AdminPetsAlertsTab />}
 
         </div>
     );

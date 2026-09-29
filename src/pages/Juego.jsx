@@ -16,6 +16,13 @@ export const Juego = () => {
     const [coinsCollected, setCoinsCollected] = useState(0);
     const [totalCoins, setTotalCoins] = useState(4);
 
+        const [caciqueImage, setCaciqueImage] = useState(null);
+    useEffect(() => {
+        const img = new Image();
+        img.onload = () => setCaciqueImage(img);
+        img.src = '/cacique-cara.png';
+    }, []);
+
     const audioCtxRef = useRef(null);
 
     const getAudioContext = () => {
@@ -133,10 +140,10 @@ export const Juego = () => {
         } catch (e) { }
     };
 
-    const keysRef = useRef({ left: false, right: false, up: false });
+    const keysRef = useRef({ left: false, right: false, up: false, option1: false, option2: false });
 
     const resetKeys = () => {
-        keysRef.current = { left: false, right: false, up: false };
+        keysRef.current = { left: false, right: false, up: false, option1: false, option2: false };
     };
 
     useEffect(() => {
@@ -269,6 +276,19 @@ export const Juego = () => {
             phase: 0
         };
 
+        let caciqueEncounter = {
+            active: false,
+            timer: 0,
+            x: -100,
+            y: 40,
+            throwsLeft: 0,
+            cooldown: 200,
+            phase: 'idle' // idle, flying_in, warning, throwing, retreating
+        };
+        let fireballs = [];
+        
+        let onScreenFireBtn = false; // flag para disparar desde botón
+
         let spawnTimer = 0;
         let dodgedCount = 0;
         let animId;
@@ -291,7 +311,9 @@ export const Juego = () => {
             nextObstacleX += DIFF_PARAMS.hazardSpacing + Math.floor(Math.random() * 80);
         }
 
+        
         const onKeyDown = (e) => {
+            if (e.repeat) return;
             if (['ArrowUp', 'KeyW', 'Space'].includes(e.code)) {
                 keysRef.current.up = true;
                 e.preventDefault();
@@ -304,6 +326,22 @@ export const Juego = () => {
                 keysRef.current.right = true;
                 e.preventDefault();
             }
+            if (e.code === 'Digit1' || e.code === 'Numpad1') keysRef.current.option1 = true;
+            if (e.code === 'Digit2' || e.code === 'Numpad2') keysRef.current.option2 = true;
+
+            
+            if (['KeyF', 'Enter'].includes(e.code) || (e.code === 'Space' && player.hasTorch)) {
+                if (player.hasTorch && fireballs.length < 3) {
+                    fireballs.push({
+                        x: player.x + player.width,
+                        y: player.y + 10,
+                        vx: 7,
+                        vy: 0,
+                        life: 60
+                    });
+                    playSfx('boost');
+                }
+            }
         };
 
         const onKeyUp = (e) => {
@@ -313,10 +351,31 @@ export const Juego = () => {
         };
 
         const onBlur = () => resetKeys();
+        const onVisibilityChange = () => {
+            if (document.hidden) resetKeys();
+        };
 
         window.addEventListener('keydown', onKeyDown);
         window.addEventListener('keyup', onKeyUp);
         window.addEventListener('blur', onBlur);
+        document.addEventListener('visibilitychange', onVisibilityChange);
+        const onCanvasClick = (e) => {
+            const canvas = canvasRef.current;
+            if (!canvas) return;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+            
+            // Botón 1: x: 60, y: 340, width: 140, height: 32
+            if (x >= 60 && x <= 200 && y >= 340 && y <= 372) keysRef.current.option1 = true;
+            // Botón 2: x: 210, y: 340, width: 150, height: 32
+            if (x >= 210 && x <= 360 && y >= 340 && y <= 372) keysRef.current.option2 = true;
+        };
+        canvasRef.current?.addEventListener('click', onCanvasClick);
+
+
 
         // BUCLE DEL CANVAS
         const loop = () => {
@@ -445,23 +504,79 @@ export const Juego = () => {
                     resetKeys();
                 }
 
-                // BOTELLAS DE CACIQUE
-                spawnTimer++;
-                if (spawnTimer % DIFF_PARAMS.bottleInterval === 0 && totalProg < DIFF_PARAMS.totalDist - 420) {
-                    const worldTargetX = worldX + player.x + 115 + Math.random() * 85;
-                    const startScreenX = canvas.width + 30;
-                    const framesInFlight = (58 / DIFF_PARAMS.bottleSpeed);
+                
+                // CACIQUE MECHANIC
+                if (!caciqueEncounter.active && caciqueEncounter.cooldown <= 0 && totalProg > 800 && totalProg < DIFF_PARAMS.totalDist - 600) {
+                    caciqueEncounter.active = true;
+                    caciqueEncounter.phase = 'flying_in';
+                    caciqueEncounter.x = canvas.width + 50;
+                    caciqueEncounter.y = 30 + Math.random() * 40;
+                    caciqueEncounter.timer = 0;
+                    caciqueEncounter.throwsLeft = 2 + Math.floor(Math.random() * 2);
+                }
+                if (!caciqueEncounter.active && caciqueEncounter.cooldown > 0) {
+                    caciqueEncounter.cooldown--;
+                }
 
-                    bottles.push({
-                        worldTargetX,
-                        x: startScreenX,
-                        y: -20,
-                        vx: ((worldTargetX - worldX) - startScreenX) / framesInFlight,
-                        vy: -2.2,
-                        gravity: 0.18 * DIFF_PARAMS.bottleSpeed,
-                        angle: 0,
-                        spin: 0.1
-                    });
+                if (caciqueEncounter.active) {
+                    caciqueEncounter.timer++;
+                    if (caciqueEncounter.phase === 'flying_in') {
+                        caciqueEncounter.x -= 3;
+                        if (caciqueEncounter.x < player.x + 150) {
+                            caciqueEncounter.phase = 'warning';
+                            caciqueEncounter.timer = 0;
+                        }
+                    } else if (caciqueEncounter.phase === 'warning') {
+                        // Flotando y haciendo advertencia
+                        caciqueEncounter.y += Math.sin(caciqueEncounter.timer * 0.1) * 0.5;
+                        if (caciqueEncounter.timer > 45) {
+                            caciqueEncounter.phase = 'throwing';
+                            caciqueEncounter.timer = 0;
+                        }
+                    } else if (caciqueEncounter.phase === 'throwing') {
+                        // Lanzar botella
+                        if (caciqueEncounter.timer === 1 && caciqueEncounter.throwsLeft > 0) {
+                            caciqueEncounter.throwsLeft--;
+                            const worldTargetX = worldX + player.x + (player.vx || DIFF_PARAMS.speed) * 15; // lanza hacia donde va
+                            const framesInFlight = (58 / DIFF_PARAMS.bottleSpeed);
+                            bottles.push({
+                                worldTargetX,
+                                x: caciqueEncounter.x,
+                                y: caciqueEncounter.y + 20,
+                                vx: ((worldTargetX - worldX) - caciqueEncounter.x) / framesInFlight,
+                                vy: -2.5,
+                                gravity: 0.18 * DIFF_PARAMS.bottleSpeed,
+                                angle: 0,
+                                spin: 0.1
+                            });
+                        }
+                        if (caciqueEncounter.timer > 30) {
+                            if (caciqueEncounter.throwsLeft > 0) {
+                                caciqueEncounter.phase = 'warning';
+                                caciqueEncounter.timer = 0;
+                            } else {
+                                caciqueEncounter.phase = 'retreating';
+                                caciqueEncounter.timer = 0;
+                            }
+                        }
+                    } else if (caciqueEncounter.phase === 'retreating') {
+                        caciqueEncounter.x += 4;
+                        caciqueEncounter.y -= 1;
+                        if (caciqueEncounter.x > canvas.width + 100) {
+                            caciqueEncounter.active = false;
+                            caciqueEncounter.cooldown = DIFF_PARAMS.bottleInterval * 2;
+                        }
+                    }
+                }
+                
+                // Fireballs logic
+                for (let i = fireballs.length - 1; i >= 0; i--) {
+                    const fb = fireballs[i];
+                    fb.x += fb.vx;
+                    fb.life--;
+                    if (fb.life <= 0) {
+                        fireballs.splice(i, 1);
+                    }
                 }
             }
 
@@ -544,6 +659,7 @@ export const Juego = () => {
                 ctx.fillRect(-5, -26, 10, 4);
                 ctx.restore();
 
+                
                 if (
                     !cinematic.active &&
                     !pokemonEncounter.active &&
@@ -552,15 +668,24 @@ export const Juego = () => {
                     b.y > player.y - 4 &&
                     b.y < player.y + player.height - 12
                 ) {
-                    if (!player.hasTorch) {
-                        playSfx('hit');
-                        resetKeys();
-                        setDeathReason('¡Le cayó un Cacique en la jupa!');
-                        setGameState('gameover');
-                        cancelAnimationFrame(animId);
-                        return;
+                    playSfx('hit');
+                    resetKeys();
+                    setDeathReason('¡Le cayó un Cacique en la jupa!');
+                    setGameState('gameover');
+                    cancelAnimationFrame(animId);
+                    return;
+                }
+                
+                // Fireball collision with bottle
+                for (let f = fireballs.length - 1; f >= 0; f--) {
+                    const fb = fireballs[f];
+                    if (fb.x + 10 > b.x - 8 && fb.x - 10 < b.x + 8 && fb.y + 10 > b.y - 14 && fb.y - 10 < b.y + 14) {
+                        b.y = GROUND_Y - 2; // Forzar ruptura
+                        fireballs.splice(f, 1);
+                        break;
                     }
                 }
+
 
                 if (b.y >= GROUND_Y - 2) {
                     playSfx('shatter');
@@ -755,6 +880,61 @@ export const Juego = () => {
                 }
             });
 
+            
+            // DRAW FIREBALLS
+            fireballs.forEach(fb => {
+                const grad = ctx.createRadialGradient(fb.x, fb.y, 2, fb.x, fb.y, 12);
+                grad.addColorStop(0, '#FFFFFF');
+                grad.addColorStop(0.3, '#FDE047');
+                grad.addColorStop(0.7, '#EA580C');
+                grad.addColorStop(1, 'transparent');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(fb.x, fb.y, 14, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            
+            
+            // DRAW CACIQUE
+            if (caciqueEncounter.active) {
+                ctx.save();
+                ctx.translate(caciqueEncounter.x, caciqueEncounter.y + Math.sin(Date.now()*0.005)*5);
+                
+                ctx.shadowColor = '#EA580C';
+                ctx.shadowBlur = 15;
+                
+                if (caciqueImage) {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 38, 0, Math.PI * 2);
+                    ctx.clip();
+                    ctx.drawImage(caciqueImage, -38, -38, 76, 76);
+                    ctx.restore();
+                    // Border flameante
+                    ctx.strokeStyle = '#B91C1C';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 38, 0, Math.PI * 2);
+                    ctx.stroke();
+                } else {
+                    ctx.fillStyle = '#FCA5A5';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 38, 0, Math.PI*2);
+                    ctx.fill();
+                }
+                
+                if (caciqueEncounter.phase === 'warning') {
+                    ctx.shadowBlur = 0;
+                    ctx.fillStyle = '#EF4444';
+                    ctx.font = 'bold 32px sans-serif';
+                    ctx.fillText('!', 30, -30);
+                }
+                ctx.restore();
+            }
+
+
+
             // LA ANTORCHA
             if (!torchItem.collected) {
                 const torchX = torchItem.x - worldX;
@@ -809,7 +989,7 @@ export const Juego = () => {
             const casonaScreenX = casona.x - worldX;
             if (casonaScreenX < canvas.width + 160) {
                 ctx.fillStyle = casona.burningIntensity > 0 ? '#581C1C' : '#78350F';
-                ctx.fillRect(casonaScreenX, casona.y, 200, 155);
+                ctx.beginPath(); ctx.roundRect(casonaScreenX, casona.y, 200, 155, 8); ctx.fill();
 
                 ctx.fillStyle = casona.burningIntensity > 0 ? '#450A0A' : '#7F1D1D';
                 ctx.beginPath();
@@ -819,10 +999,10 @@ export const Juego = () => {
                 ctx.fill();
 
                 ctx.fillStyle = '#0F172A';
-                ctx.fillRect(casonaScreenX + 35, casona.y + 40, 36, 40);
+                ctx.beginPath(); ctx.roundRect(casonaScreenX + 35, casona.y + 40, 36, 40, 4); ctx.fill();
 
                 ctx.fillStyle = '#2A1205';
-                ctx.fillRect(casonaScreenX + 115, casona.y + 65, 50, 90);
+                ctx.beginPath(); ctx.roundRect(casonaScreenX + 115, casona.y + 65, 50, 90, 4); ctx.fill();
 
                 walkerEnemies.forEach((e) => {
                     const ex = casonaScreenX + (e.id === 'walker' ? 40 : 125);
@@ -992,11 +1172,23 @@ export const Juego = () => {
                 ctx.ellipse(650, 190, 110, 30, 0, 0, Math.PI * 2);
                 ctx.fill();
 
+                
                 // 2. JUAN SANTAMARÍA EN PRIMER PLANO (DE ESPALDAS / 3/4 A LA IZQUIERDA)
                 ctx.save();
-                const jX = 140 + pokemonEncounter.juanOffset;
-                const jY = 150;
+                let jX = 140 + pokemonEncounter.juanOffset;
+                let jY = 150;
+                
+                if (player.falling && pokemonEncounter.phase === 'duel' && pokemonEncounter.animTimer >= 210) {
+                    // Cae al suelo
+                    let t = pokemonEncounter.animTimer - 210;
+                    jY += t * 3;
+                    ctx.translate(jX + 26, jY + 22);
+                    ctx.rotate(-t * 0.05);
+                    ctx.translate(-(jX + 26), -(jY + 22));
+                }
+                
                 ctx.translate(jX, jY);
+
 
                 // Espalda de Juan (más grande en primer plano)
                 ctx.fillStyle = '#F8FAFC';
@@ -1086,26 +1278,63 @@ export const Juego = () => {
                 ctx.textAlign = 'left';
                 ctx.fillText('¡EL PIEDRERO DEL PRECA APARECIO!', 60, 292);
 
+                
+                
                 // Diálogo en grande
                 ctx.fillStyle = '#0F172A';
                 ctx.font = 'bold 14px sans-serif';
 
-                if (pokemonEncounter.phase === 'transition' || pokemonEncounter.phase === 'duel') {
+                if (pokemonEncounter.phase === 'transition' || pokemonEncounter.phase === 'decision' || pokemonEncounter.phase === 'duel') {
+                    ctx.fillText('¡EL PIEDRERO DEL PRECA APARECIÓ!', 60, 294);
                     ctx.fillText(`"${pokemonEncounter.phrase}"`, 60, 318);
-                    ctx.fillStyle = '#DC2626';
-                    ctx.font = 'bold 12px sans-serif';
-                    ctx.fillText(`Tejas en su bolsa: ${collectedCoins} / ${DIFF_PARAMS.coinsCount} necesarias`, 60, 342);
 
-                    // Transición al duelo tras deslizarse
-                    if (pokemonEncounter.animTimer > 90 && pokemonEncounter.phase === 'transition') {
-                        pokemonEncounter.phase = 'duel';
+                    if (pokemonEncounter.phase === 'transition') {
+                        // Transición a decisión tras deslizarse
+                        if (pokemonEncounter.animTimer > 90) {
+                            pokemonEncounter.phase = 'decision';
+                            pokemonEncounter.animTimer = 0;
+                            // reset keys to avoid accidental selection
+                            keysRef.current.option1 = false;
+                            keysRef.current.option2 = false;
+                        }
+                    } else if (pokemonEncounter.phase === 'decision') {
+                        // Mostrar menú de decisión interactivo
+                        ctx.fillStyle = '#059669';
+                        ctx.beginPath();
+                        ctx.roundRect(60, 340, 140, 32, 6);
+                        ctx.fill();
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.font = 'bold 13px sans-serif';
+                        ctx.fillText('1. 💰 Pagar', 85, 361);
+                        
+                        ctx.fillStyle = '#DC2626';
+                        ctx.beginPath();
+                        ctx.roundRect(210, 340, 150, 32, 6);
+                        ctx.fill();
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.font = 'bold 13px sans-serif';
+                        ctx.fillText('2. ⚔️ Pelear', 235, 361);
+
+                        // Evaluar inputs
+                        if (keysRef.current.option1) {
+                            pokemonEncounter.phase = 'duel';
+                            pokemonEncounter.decision = 'pay';
+                            pokemonEncounter.animTimer = 0;
+                        } else if (keysRef.current.option2) {
+                            pokemonEncounter.phase = 'duel';
+                            pokemonEncounter.decision = 'fight';
+                            pokemonEncounter.animTimer = 0;
+                        }
                     }
                 }
 
+
+
+                
+                
                 // EVALUACIÓN DE LAS TEJAS
                 if (pokemonEncounter.phase === 'duel') {
-                    if (collectedCoins >= DIFF_PARAMS.coinsCount) {
-                        // TIENE TODAS LAS MONEDAS: SE LAS ENTREGA Y QUEDA PURA VIDA
+                    if (pokemonEncounter.decision === 'pay' && collectedCoins >= DIFF_PARAMS.coinsCount) {
                         ctx.fillStyle = '#166534';
                         ctx.font = 'bold 14px sans-serif';
                         ctx.fillText('¡Le soltó todas las tejas! "¡Conoce mi rico, pura vida!"', 60, 342);
@@ -1116,39 +1345,52 @@ export const Juego = () => {
                         ctx.arc(380 + Math.sin(pokemonEncounter.animTimer * 0.2) * 40, 200, 10, 0, Math.PI * 2);
                         ctx.fill();
 
-                        if (pokemonEncounter.animTimer > 180) {
+                        if (pokemonEncounter.animTimer > 120) {
                             pokemonEncounter.active = false;
                             pokemonEncounter.phase = 'done';
                             playSfx('boost');
                         }
                     } else {
-                        // LE FALTAN TEJAS: APUÑALAMIENTO INEVITABLE
-                        pokemonEncounter.slashAnim = 1;
-
                         ctx.fillStyle = '#991B1B';
                         ctx.font = 'bold 14px sans-serif';
-                        ctx.fillText('¡NO TIENE TODAS LAS TEJAS! "¡Ah playo, se está haciendo el ruso!"', 60, 342);
-
-                        // ANIMACIÓN DE CORTE ROJO SOBRE LA PANTALLA
-                        ctx.strokeStyle = '#DC2626';
-                        ctx.lineWidth = 6;
-                        ctx.beginPath();
-                        ctx.moveTo(120, 120);
-                        ctx.lineTo(240, 240);
-                        ctx.stroke();
-
-                        if (pokemonEncounter.animTimer === 120) {
-                            playSfx('stab');
+                        if (pokemonEncounter.decision === 'fight') {
+                            ctx.fillText('¡Intentaste pelear, pero el piedrero sacó un puñal oxidado!', 60, 342);
+                        } else {
+                            ctx.fillText('¡NO TIENE TODAS LAS TEJAS! "¡Ah papi, se está haciendo el ruso!"', 60, 342);
                         }
 
-                        if (pokemonEncounter.animTimer > 165) {
-                            setDeathReason(`¡Lo apuñaló el piedrero por dejar botadas las tejas! Solo llevaba ${collectedCoins} de ${DIFF_PARAMS.coinsCount}.`);
+                        // Secuencia animada
+                        if (pokemonEncounter.animTimer > 120 && pokemonEncounter.animTimer <= 210) {
+                            pokemonEncounter.piedreroOffset -= 6;
+                            pokemonEncounter.slashAnim = 1;
+                        }
+                        
+                        if (pokemonEncounter.animTimer === 210) {
+                            playSfx('stab');
+                            player.falling = true;
+                        }
+
+                        if (pokemonEncounter.animTimer >= 210 && pokemonEncounter.animTimer < 225) {
+                            ctx.save();
+                            ctx.translate(Math.random() * 12 - 6, Math.random() * 12 - 6);
+                            ctx.fillStyle = 'rgba(220, 38, 38, 0.4)';
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                            ctx.restore();
+                        }
+
+                        if (pokemonEncounter.animTimer > 300) {
+                            setDeathReason(
+                                pokemonEncounter.decision === 'fight' 
+                                    ? '¡Te apuñaló el piedrero en un duelo desigual!' 
+                                    : `¡Te apuñaló por dejar botadas las tejas! Solo llevabas ${collectedCoins} de ${DIFF_PARAMS.coinsCount}.`
+                            );
                             setGameState('gameover');
                             cancelAnimationFrame(animId);
                             return;
                         }
                     }
                 }
+
             }
 
             // CINEMÁTICA FINAL: VICTORIA
@@ -1211,9 +1453,15 @@ export const Juego = () => {
 
         return () => {
             cancelAnimationFrame(animId);
+            
             window.removeEventListener('keydown', onKeyDown);
             window.removeEventListener('keyup', onKeyUp);
             window.removeEventListener('blur', onBlur);
+            
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+            if (canvasRef.current) canvasRef.current.removeEventListener('click', onCanvasClick);
+
+
             resetKeys();
         };
     }, [gameState, difficulty]);
@@ -1271,6 +1519,9 @@ export const Juego = () => {
             </div>
 
             {/* DASHBOARD DE MÉTRICAS */}
+            
+            
+            
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
@@ -1503,7 +1754,7 @@ export const Juego = () => {
                     ⌨️ <strong>Controles de Teclado:</strong> Teclas <strong>A / D</strong> o flechas para avanzar o retroceder • <strong>Espacio / W</strong> para saltar zanjas y alcantarillas.
                 </div>
                 <div style={{ fontSize: '0.78rem', color: '#D97706', fontWeight: '800' }}>
-                    💰 Recuerde: ¡No deje ni una teja (₡100) botada para superar el encuentro Pokémon!
+                    💰 Recuerde: ¡No deje ni una teja (₡100) botada para superar el encuentro con el piedro!
                 </div>
             </div>
 

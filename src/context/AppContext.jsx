@@ -27,6 +27,34 @@ export const AppProvider = ({ children }) => {
   // Accesibilidad: Lector de pantalla / Voz
   const [isSpeaking, setIsSpeaking] = useState(false);
 
+  // 1. Función para obtener y garantizar una voz en español
+  const getSpanishVoice = () => {
+    const voices = window.speechSynthesis.getVoices();
+    
+    // Prioridad: Voces en español latino
+    const latinoVoice = voices.find(v => 
+      v.lang === 'es-419' || v.lang === 'es-CR' || v.lang === 'es-MX' || v.lang === 'es-US'
+    );
+    if (latinoVoice) return latinoVoice;
+
+    const anySpanishVoice = voices.find(v => 
+      v.lang.toLowerCase().startsWith('es') || 
+      v.name.toLowerCase().includes('spanish') || 
+      v.name.toLowerCase().includes('español')
+    );
+    return anySpanishVoice || null;
+  };
+
+  // 2. En el useEffect del componente, asegurarse de precargar las voces
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
+    }
+  }, []);
+
   useEffect(() => {
     if (user) {
       localStorage.setItem('sjd_user', JSON.stringify(user));
@@ -76,20 +104,33 @@ export const AppProvider = ({ children }) => {
   // Función de lectura por voz para discapacidad visual
   const speakText = (text) => {
     if (!('speechSynthesis' in window)) {
-      alert('Su navegador no soporta síntesis de voz.');
+      alert('Tu navegador no soporta lectura por voz.');
       return;
     }
-    window.speechSynthesis.cancel();
-    if (isSpeaking) {
+
+    if (isSpeaking || window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
       setIsSpeaking(false);
       return;
     }
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'es-CR';
+
+    const textToRead = text || document.querySelector('main')?.innerText || 'Bienvenido a San Juan de Dios Informa.';
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    
+    utterance.lang = 'es-419';
     utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+
+    const selectedVoice = getSpanishVoice();
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+      utterance.lang = selectedVoice.lang; // Sincronizar el lang exacto
+    }
+
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
     setIsSpeaking(true);
+
     window.speechSynthesis.speak(utterance);
   };
 

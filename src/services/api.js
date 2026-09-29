@@ -431,13 +431,13 @@ export const getDistrictActs = async () => {
 // --- MÓDULO MODULAR: DENUNCIAS CATEGORIZADAS Y FOLIO ---
 
 export const getDenunciationCategories = async () => {
-  const res = await fetch(`${BASE_URL}/denunciationCategories`);
+  const res = await fetch(`${API_URL}/denunciationCategories`);
   if (!res.ok) throw new Error('Error al obtener categorías de denuncias');
   return res.json();
 };
 
 export const getFormalDenunciations = async () => {
-  const res = await fetch(`${BASE_URL}/formalDenunciations`);
+  const res = await fetch(`${API_URL}/formalDenunciations`);
   if (!res.ok) throw new Error('Error al obtener denuncias formales');
   return res.json();
 };
@@ -451,11 +451,185 @@ export const createFormalDenunciation = async (data) => {
     date: new Date().toISOString().split('T')[0],
     resolutionNote: 'Expediente aperturado para asignación de cuadrilla o inspector comunal.'
   };
-  const res = await fetch(`${BASE_URL}/formalDenunciations`, {
+  const res = await fetch(`${API_URL}/formalDenunciations`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   });
   if (!res.ok) throw new Error('Error al registrar la denuncia');
+  return res.json();
+};
+export const getCommunityReels = async () => {
+  const res = await fetch(`${API_URL}/communityReels`);
+  if (!res.ok) throw new Error('Error al cargar reels');
+  return res.json();
+};
+
+export const updateReelLikes = async (id, newLikes) => {
+  const res = await fetch(`${API_URL}/communityReels/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ likes: newLikes })
+  });
+  if (!res.ok) throw new Error('Error al actualizar likes');
+  return res.json();
+};
+
+// --- MARKETPLACE COMUNAL ---
+export const getMarketplaceItems = async () => {
+  const res = await fetch(`${API_URL}/marketplaceItems`);
+  if (!res.ok) throw new Error('Error al obtener productos');
+  return res.json();
+};
+
+export const createMarketplaceItem = async (itemData) => {
+  const payload = {
+    ...itemData,
+    status: 'pending', // Requiere aprobación en panel ADI
+    date: new Date().toISOString().split('T')[0]
+  };
+  const res = await fetch(`${API_URL}/marketplaceItems`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error('Error al publicar artículo');
+  return res.json();
+};
+
+export const updateMarketplaceItemStatus = async (id, status) => {
+  const res = await fetch(`${API_URL}/marketplaceItems/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status })
+  });
+  if (!res.ok) throw new Error('Error al actualizar estado del artículo');
+  return res.json();
+};
+
+export const deleteMarketplaceItem = async (id) => {
+  const res = await fetch(`${API_URL}/marketplaceItems/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Error al eliminar artículo');
+  return res.json();
+};
+
+// --- SERVICIOS GLOBALES DE MODERACIÓN ADI ---
+export const updateDenunciationStatus = async (id, status, resolutionNote) => {
+  const res = await fetch(`${API_URL}/formalDenunciations/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status, resolutionNote })
+  });
+  if (!res.ok) throw new Error('Error al moderar denuncia');
+  return res.json();
+};
+
+export const deleteReel = async (id) => {
+  const res = await fetch(`${API_URL}/communityReels/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Error al eliminar reel');
+  return res.json();
+};
+
+export const getJobs = async () => {
+  const res = await fetch(`${API_URL}/communityJobs`);
+  if (!res.ok) throw new Error('Error al obtener empleos');
+  return res.json();
+};
+
+export const updateJobStatus = async (id, status) => {
+  const res = await fetch(`${API_URL}/communityJobs/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status })
+  });
+  if (!res.ok) throw new Error('Error al actualizar empleo');
+  return res.json();
+};
+
+export const deleteJob = async (id) => {
+  const res = await fetch(`${API_URL}/communityJobs/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Error al eliminar empleo');
+  return res.json();
+};
+
+export const getBusRoutesLared = async () => {
+  const res = await fetch(`${API_URL}/busRoutesLared`);
+  if (!res.ok) throw new Error('Error al obtener rutas de buses');
+  return res.json();
+};
+
+export const getDistrictSchedule = async () => {
+  const res = await fetch(`${API_URL}/districtSchedule`);
+  if (!res.ok) throw new Error('Error al obtener cronograma');
+  return res.json();
+};
+
+export const updateReelComments = async (id, comments) => {
+  const res = await fetch(`${API_URL}/communityReels/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ comments })
+  });
+  if (!res.ok) throw new Error('Error al publicar comentario en reel');
+  return res.json();
+};
+
+export const createReel = async (reelData) => {
+  const res = await fetch(`${API_URL}/communityReels`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(reelData)
+  });
+  if (!res.ok) throw new Error('Error al subir reel');
+  return res.json();
+};
+
+export const updateReelStatus = async (id, status) => {
+  const res = await fetch(`${API_URL}/communityReels/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status })
+  });
+  if (!res.ok) throw new Error('Error al actualizar estado del reel');
+  return res.json();
+};
+
+// --- MASCOTAS COMUNITARIAS ---
+export const getCommunityPets = async () => {
+  const res = await fetch(`${API_URL}/communityPets`);
+  if (!res.ok) throw new Error('Error al obtener mascotas');
+  return res.json();
+};
+
+export const createCommunityPet = async (petData) => {
+  const res = await fetch(`${API_URL}/communityPets`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...petData, date: new Date().toISOString().split('T')[0] })
+  });
+  if (!res.ok) throw new Error('Error al reportar mascota');
+  return res.json();
+};
+
+export const deleteCommunityPet = async (id) => {
+  const res = await fetch(`${API_URL}/communityPets/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Error al eliminar reporte de mascota');
+  return res.json();
+};
+
+// --- EMERGENCIAS Y ALERTAS ADI ---
+export const getEmergencyAlerts = async () => {
+  const res = await fetch(`${API_URL}/emergencyAlerts`);
+  if (!res.ok) throw new Error('Error al obtener alertas de emergencia');
+  return res.json();
+};
+
+export const toggleEmergencyAlert = async (id, active) => {
+  const res = await fetch(`${API_URL}/emergencyAlerts/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ active })
+  });
+  if (!res.ok) throw new Error('Error al actualizar alerta');
   return res.json();
 };

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { 
   LogIn, 
@@ -33,6 +34,20 @@ export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
+    }
+    return () => {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -41,13 +56,48 @@ export const Navbar = () => {
 
   const closeMenu = () => setMenuOpen(false);
 
-  const handleReadScreen = () => {
-    if (isSpeaking) {
-      stopSpeaking();
-    } else {
-      const textToRead = "Portal Oficial San Juan de Dios Informa. Menú: Inicio, Comercios, Agenda, Avisos, Tribuna y Denuncias, Guía IA, y Minijuego Comunal.";
-      speakText(textToRead);
+  const speakAccessibility = () => {
+    if (!('speechSynthesis' in window)) return;
+
+    // 1. Detener cualquier audio previo
+    window.speechSynthesis.cancel();
+
+    // 2. Obtener lista real de voces
+    const allVoices = window.speechSynthesis.getVoices();
+
+    // 3. Filtrar de forma estricta voces que sean exclusivamente en español
+    // En Windows suelen llamarse 'Microsoft Helena', 'Microsoft Sabina', 'Microsoft Raul', 'Google español', etc.
+    const spanishVoice = allVoices.find(v => 
+      (v.lang && v.lang.toLowerCase().includes('es')) ||
+      (v.name && (
+        v.name.toLowerCase().includes('spanish') || 
+        v.name.toLowerCase().includes('español') ||
+        v.name.toLowerCase().includes('helena') ||
+        v.name.toLowerCase().includes('sabina') ||
+        v.name.toLowerCase().includes('raul')
+      ))
+    );
+
+    // Si por algún motivo extremo Windows no tiene NINGUNA voz en español instalada:
+    if (!spanishVoice) {
+      console.warn('No se detectó paquete de voz en español en el sistema operativo.');
     }
+
+    const text = "Portal Comunal de San Juan de Dios. Bienvenido a la plataforma oficial de servicios ciudadanos y desarrollo distrital.";
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    if (spanishVoice) {
+      utterance.voice = spanishVoice;
+      utterance.lang = spanishVoice.lang;
+    } else {
+      utterance.lang = 'es-ES';
+    }
+
+    utterance.rate = 0.9; // Velocidad pausada
+    utterance.pitch = 1.0;
+
+    // Forzar ejecución limpia
+    window.speechSynthesis.speak(utterance);
   };
 
   return (
@@ -72,14 +122,14 @@ export const Navbar = () => {
           </span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <button
-              onClick={handleReadScreen}
-              title={isSpeaking ? "Detener lectura" : "Escuchar contenido por voz"}
+              onClick={speakAccessibility}
+              title={"Escuchar contenido por voz / Detener"}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.25rem',
-                background: isSpeaking ? '#DC2626' : 'none',
-                color: isSpeaking ? '#FFFFFF' : 'var(--text-main)',
+                background: 'none',
+                color: 'var(--text-main)',
                 border: '1px solid var(--border)',
                 borderRadius: '4px',
                 padding: '0.2rem 0.45rem',
@@ -88,8 +138,8 @@ export const Navbar = () => {
                 cursor: 'pointer'
               }}
             >
-              {isSpeaking ? <VolumeX size={13} /> : <Volume2 size={13} />}
-              <span>{isSpeaking ? 'Detener Voz' : 'Voz'}</span>
+              <Volume2 size={13} />
+              <span>Voz</span>
             </button>
 
             <button
@@ -155,8 +205,14 @@ export const Navbar = () => {
           <NavLink to="/" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
             Inicio
           </NavLink>
+          <NavLink to="/distrito" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Nuestro Distrito
+          </NavLink>
           <NavLink to="/directorio" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
             Comercios
+          </NavLink>
+          <NavLink to="/marketplace" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Mercadito
           </NavLink>
           <NavLink to="/agenda" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
             Agenda & Servicios
@@ -167,51 +223,59 @@ export const Navbar = () => {
           <NavLink to="/foro" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
             Tribuna & Denuncias
           </NavLink>
-          <NavLink to="/asistente" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-            Guía IA
-          </NavLink>
-          
-          {/* BOTÓN DISCRETO DEL MINIJUEGO (SOLO ÍCONO ELEGANTE) */}
-          <NavLink 
-            to="/juego" 
-            onClick={closeMenu} 
-            title="Minijuego Comunal: La Gesta de Rivas"
-            className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} 
-            style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
-              padding: '0.4rem 0.55rem',
-              borderRadius: '6px',
-              backgroundColor: 'var(--surface-subtle)',
-              border: '1px solid var(--border)'
-            }}
-          >
-            <Gamepad2 size={18} color="var(--primary)" />
+          <NavLink to="/reels" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Reels
           </NavLink>
 
-          {user?.role === 'admin' && (
-            <NavLink to="/admin" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} style={{ color: '#002B7F', fontWeight: '900' }}>
-              Panel ADI
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: 'auto' }}>
+            <div style={{ borderLeft: '1px solid var(--border)', height: '24px', margin: '0 0.5rem' }}></div>
+            
+            <NavLink to="/asistente" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+              Guía IA
             </NavLink>
-          )}
 
-          <div style={{ marginLeft: '0.5rem' }} className="auth-btn-wrapper">
-            {user ? (
-              <button onClick={handleLogout} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)', border: '1px solid var(--border)', padding: '0.45rem 0.85rem', borderRadius: '4px', fontWeight: '700', fontSize: '0.82rem', cursor: 'pointer' }}>
-                <LogOut size={14} /> Salir ({user.name.split(' ')[0]})
-              </button>
-            ) : (
-              <Link to="/login" onClick={closeMenu} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', backgroundColor: '#002B7F', color: 'white', padding: '0.45rem 0.95rem', borderRadius: '4px', fontWeight: '700', fontSize: '0.82rem', textDecoration: 'none' }}>
-                <LogIn size={14} /> Ingresar
-              </Link>
+            <NavLink 
+              to="/juego" 
+              onClick={closeMenu} 
+              title="Minijuego Comunal: La Gesta de Rivas"
+              className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} 
+              style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                padding: '0.4rem 0.55rem',
+                borderRadius: '6px',
+                backgroundColor: 'var(--surface-subtle)',
+                border: '1px solid var(--border)'
+              }}
+            >
+              <Gamepad2 size={18} color="var(--primary)" />
+            </NavLink>
+
+            {user?.role === 'admin' && (
+              <NavLink to="/admin" onClick={closeMenu} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} style={{ color: '#002B7F', fontWeight: '900' }}>
+                Panel ADI
+              </NavLink>
             )}
+
+            <div className="auth-btn-wrapper">
+              {user ? (
+                <button onClick={handleLogout} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', backgroundColor: 'var(--surface-subtle)', color: 'var(--text-main)', border: '1px solid var(--border)', padding: '0.45rem 0.85rem', borderRadius: '4px', fontWeight: '700', fontSize: '0.82rem', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                  <LogOut size={14} /> Salir ({user.name.split(' ')[0]})
+                </button>
+              ) : (
+                <Link to="/login" onClick={closeMenu} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', backgroundColor: '#002B7F', color: 'white', padding: '0.45rem 0.95rem', borderRadius: '4px', fontWeight: '700', fontSize: '0.82rem', textDecoration: 'none', whiteSpace: 'nowrap' }}>
+                  <LogIn size={14} /> Ingresar
+                </Link>
+              )}
+            </div>
           </div>
         </nav>
       </div>
 
       <style>{`
-        .main-nav-links { display: flex; align-items: center; gap: 1.1rem; }
+        .main-nav-links { display: flex; align-items: center; gap: 0.85rem; font-size: 0.84rem; font-weight: 600; }
+        .nav-link { white-space: nowrap; }
         @media (max-width: 980px) {
           .mobile-hamburger-btn { display: block !important; }
           .main-nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--surface); border-bottom: 2px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.15); flex-direction: column; align-items: flex-start; padding: 1.25rem 1.5rem; gap: 1rem; z-index: 2500; }

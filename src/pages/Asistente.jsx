@@ -74,7 +74,7 @@ Responde basándote en estos datos si te preguntan por panaderías, talleres, pu
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
-          "Authorization": "Bearer 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",
+          "Authorization": `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
           "HTTP-Referer": window.location.href,
           "X-Title": "Guia San Juan de Dios",
           "Content-Type": "application/json"

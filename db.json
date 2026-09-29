@@ -98,6 +98,46 @@
       "target": "EXP-2026-089 - Ruptura de tubería matriz de agua potable",
       "details": "Estado actualizado a \"Inspección Municipal\".",
       "timestamp": "2026-09-24T20:33:57.783Z"
+    },
+    {
+      "user": "Junta Directiva ADI",
+      "action": "SUSPENDER_COMERCIO",
+      "target": "Panadería Pedrito Monge",
+      "details": "Patente comercial suspendida temporalmente.",
+      "timestamp": "2026-09-27T15:37:53.169Z",
+      "id": "G-0gl-L"
+    },
+    {
+      "user": "Junta Directiva ADI",
+      "action": "SUSPENDER_COMERCIO",
+      "target": "Abastecedor Central San Juan",
+      "details": "Patente comercial suspendida temporalmente.",
+      "timestamp": "2026-09-27T15:37:57.173Z",
+      "id": "ceZWSJZ"
+    },
+    {
+      "user": "Junta Directiva ADI",
+      "action": "APROBAR_COMERCIO",
+      "target": "Abastecedor Central San Juan",
+      "details": "Patente comercial aprobada y visible en mapa.",
+      "timestamp": "2026-09-27T15:38:10.602Z",
+      "id": "jBnU0vx"
+    },
+    {
+      "user": "Junta Directiva ADI",
+      "action": "APROBAR_COMERCIO",
+      "target": "Panadería Pedrito Monge",
+      "details": "Patente comercial aprobada y visible en mapa.",
+      "timestamp": "2026-09-27T15:38:11.549Z",
+      "id": "JxRq3Om"
+    },
+    {
+      "user": "Junta Directiva ADI",
+      "action": "APROBAR_COMERCIO",
+      "target": "Panadería Pedrito Monge",
+      "details": "Patente comercial aprobada y visible en mapa.",
+      "timestamp": "2026-09-27T15:38:12.527Z",
+      "id": "z0Gfnik"
     }
   ],
   "businesses": [
@@ -121,7 +161,7 @@
       "phone": "2250-3344",
       "whatsapp": "8777-3344",
       "lat": 9.8812,
-      "lng": -84.0930,
+      "lng": -84.093,
       "verified": true,
       "description": "Pan recién horneado y café tradicional."
     },
@@ -151,7 +191,7 @@
       "description": "Fuga de agua potable frente a la plaza. Cuadrilla notificada.",
       "date": "2026-09-24",
       "status": "Inspección Municipal",
-      "votes": 14,
+      "votes": 15,
       "internalNote": "Seguimiento con cuadrilla técnica AyA Desamparados."
     },
     {
@@ -176,7 +216,7 @@
       "category": "Servicios Públicos",
       "priority": "Normal",
       "sector": "Sector Plaza de Deportes",
-      "lat": 9.8780,
+      "lat": 9.878,
       "lng": -84.0908,
       "description": "Poste CNFL con falla nocturna frente a la cancha.",
       "date": "2026-09-22",
@@ -191,8 +231,8 @@
       "category": "Vialidad",
       "priority": "Alta",
       "sector": "Sector Máquina",
-      "lat": 9.8750,
-      "lng": -84.0950,
+      "lat": 9.875,
+      "lng": -84.095,
       "description": "Desobstrucción pluvial completada por cuadrilla municipal.",
       "date": "2026-09-18",
       "status": "Resuelto",
@@ -206,7 +246,7 @@
       "name": "Parroquia San Juan de Dios",
       "type": "Cívico / Religioso",
       "lat": 9.8795,
-      "lng": -84.0920,
+      "lng": -84.092,
       "info": "Templo principal de San Juan de Dios sobre la ruta central."
     },
     {
@@ -222,14 +262,14 @@
       "name": "Plaza de Deportes San Juan",
       "type": "Recreativo",
       "lat": 9.8782,
-      "lng": -84.0910,
+      "lng": -84.091,
       "info": "Cancha distrital de fútbol frente al Salón Comunal."
     },
     {
       "id": "4",
       "name": "Sector Pedrito Monge",
       "type": "Comunidad",
-      "lat": 9.8810,
+      "lat": 9.881,
       "lng": -84.0935,
       "info": "Barrio Pedrito Monge, sector norte del distrito."
     }
@@ -359,8 +399,7 @@
       "response": "Coordinado con el conserje Don Minor. Retirar viernes a las 3:00 PM."
     }
   ],
-
-"servicesStatus": {
+  "servicesStatus": {
     "water": {
       "status": "normal",
       "label": "Servicio Normal",
@@ -408,8 +447,7 @@
       "status": "Emitida"
     }
   ],
-
-"emergencyContacts": [
+  "emergencyContacts": [
     {
       "id": "1",
       "entity": "Fuerza Pública (Delegación Distrital)",
@@ -451,8 +489,7 @@
       "location": "Oficinas Salón Comunal ADI"
     }
   ],
-
-"communityJobs": [
+  "communityJobs": [
     {
       "id": "1",
       "title": "Ayudante de Panadería / Empaque",
@@ -497,30 +534,62 @@
     {
       "sector": "San Juan Centro",
       "zoneType": "Comercial Mixta ZC-1",
-      "allowedActivities": ["Comercio General", "Alimentación / Sodas", "Servicios Profesionales", "Talleres Menores"],
+      "allowedActivities": [
+        "Comercio General",
+        "Alimentación / Sodas",
+        "Servicios Profesionales",
+        "Talleres Menores"
+      ],
       "restrictions": "No se permiten talleres pesados ni centros de eventos con emisiones sonoras nocturnas no confinadas.",
-      "requirements": ["Visto bueno de ubicación de la ADI", "Permiso Sanitario de Funcionamiento (Ministerio de Salud)", "Croquis de fachada con rótulo"]
+      "requirements": [
+        "Visto bueno de ubicación de la ADI",
+        "Permiso Sanitario de Funcionamiento (Ministerio de Salud)",
+        "Croquis de fachada con rótulo"
+      ]
     },
     {
       "sector": "Sector Itaipú & Calabacitas",
       "zoneType": "Residencial de Media Densidad ZR-2",
-      "allowedActivities": ["Pulperías / Abastecedores", "Barberías / Salones de Belleza", "Bazar / Librería"],
+      "allowedActivities": [
+        "Pulperías / Abastecedores",
+        "Barberías / Salones de Belleza",
+        "Bazar / Librería"
+      ],
       "restrictions": "Máximo 40 m² dedicados al comercio en casa de habitación. No se autorizan licores de barra.",
-      "requirements": ["Firma de no afectación de vecinos colindantes (formulario ADI)", "Inspección de uso residencial-comercial"]
+      "requirements": [
+        "Firma de no afectación de vecinos colindantes (formulario ADI)",
+        "Inspección de uso residencial-comercial"
+      ]
     },
     {
       "sector": "Sector Pedrito Monge",
       "zoneType": "Residencial Mixta ZR-M",
-      "allowedActivities": ["Comercio Vecinal", "Venta de Pan / Repostería", "Artesanías"],
+      "allowedActivities": [
+        "Comercio Vecinal",
+        "Venta de Pan / Repostería",
+        "Artesanías"
+      ],
       "restrictions": "Debe contar con retiro frontal reglamentario para carga y descarga.",
-      "requirements": ["Comprobante de disponibilidad de agua AyA", "Aprobación de la Junta Directiva"]
+      "requirements": [
+        "Comprobante de disponibilidad de agua AyA",
+        "Aprobación de la Junta Directiva"
+      ]
     },
     {
       "sector": "Sector Calle Máquinas",
       "zoneType": "Comercial Industrial Ligera ZI-1",
-      "allowedActivities": ["Talleres Mecánicos", "Bodegas de Distribución", "Ferreterías", "Servicios Automotrices"],
+      "allowedActivities": [
+        "Talleres Mecánicos",
+        "Bodegas de Distribución",
+        "Ferreterías",
+        "Servicios Automotrices"
+      ],
       "restrictions": "Obligatorio contar con trampa de grasas y manejo de desechos según ley ambiental.",
-      "requirements": ["Plan de manejo de residuos peligrosos", "Inspección de Bomberos / Salud", "Permiso de descarga pluvial"]
+      "requirements": [
+        "Plan de manejo de residuos peligrosos",
+        "Inspección de Bomberos / Salud",
+        "Permiso de descarga pluvial"
+      ]
     }
   ],
   "minorWorkRules": [
@@ -530,7 +599,11 @@
       "limit": "Hasta 30 metros lineales",
       "permitType": "Exento de plano formal / Trámite Comunal Expedito",
       "specs": "Pendiente transversal máxima 2%, ancho libre mínimo 1.20m, superficie antideslizante con rampa de acceso.",
-      "docs": ["Fotocopia de cédula", "Foto del estado actual de la calzada", "Boleta de alineamiento"]
+      "docs": [
+        "Fotocopia de cédula",
+        "Foto del estado actual de la calzada",
+        "Boleta de alineamiento"
+      ]
     },
     {
       "id": "2",
@@ -538,7 +611,11 @@
       "limit": "Altura máxima 2.50 metros",
       "permitType": "Licencia de Obra Menor ADI-Muni",
       "specs": "Debe respetar el alineamiento de la Vía 217 o servidumbre cantonal sin invadir cordón de caño.",
-      "docs": ["Croquis acotado simple", "Certificación de propiedad o derecho de posesión", "Constancia de vecindad al día"]
+      "docs": [
+        "Croquis acotado simple",
+        "Certificación de propiedad o derecho de posesión",
+        "Constancia de vecindad al día"
+      ]
     },
     {
       "id": "3",
@@ -546,7 +623,10 @@
       "limit": "Sin alteración estructural de cerchas",
       "permitType": "Comunicación Previa de Mantenimiento",
       "specs": "Manejo adecuado de aguas pluviales hacia cordón de caño sin desaguar hacia propiedades vecinas.",
-      "docs": ["Formulario de mantenimiento de vivienda", "Constancia de no adeudo comunal"]
+      "docs": [
+        "Formulario de mantenimiento de vivienda",
+        "Constancia de no adeudo comunal"
+      ]
     }
   ],
   "environmentalData": {
@@ -564,7 +644,12 @@
         "sector": "San Juan Centro & Calabacitas",
         "date": "Sábado 3 de Octubre, 2026",
         "time": "7:00 AM - 1:00 PM",
-        "accepted": ["Llantas", "Chatarra", "Electrodomésticos viejos", "Latas"],
+        "accepted": [
+          "Llantas",
+          "Chatarra",
+          "Electrodomésticos viejos",
+          "Latas"
+        ],
         "meetingPoint": "Costado norte de la Plaza de Deportes"
       },
       {
@@ -573,7 +658,12 @@
         "sector": "Sector Itaipú & Calle Máquinas",
         "date": "Sábado 17 de Octubre, 2026",
         "time": "8:00 AM - 2:00 PM",
-        "accepted": ["Colchones", "Muebles de madera", "Tarimas", "Llantas"],
+        "accepted": [
+          "Colchones",
+          "Muebles de madera",
+          "Tarimas",
+          "Llantas"
+        ],
         "meetingPoint": "Entrada principal Urbanización Itaipú"
       }
     ],
@@ -643,9 +733,18 @@
       "executedBudget": 14250000,
       "remainingBudget": 4250000,
       "mainInvestments": [
-        { "concept": "Bacheo y carpeta asfáltica Vía 217", "amount": 8500000 },
-        { "concept": "Mantenimiento Salón Comunal y Parque", "amount": 3200000 },
-        { "concept": "Campaña de reciclaje y salud pública", "amount": 2550000 }
+        {
+          "concept": "Bacheo y carpeta asfáltica Vía 217",
+          "amount": 8500000
+        },
+        {
+          "concept": "Mantenimiento Salón Comunal y Parque",
+          "amount": 3200000
+        },
+        {
+          "concept": "Campaña de reciclaje y salud pública",
+          "amount": 2550000
+        }
       ]
     }
   },
@@ -679,11 +778,26 @@
     }
   ],
   "denunciationCategories": [
-    { "id": "aceras", "label": "Aceras destruidas o sin rampa Ley 7600" },
-    { "id": "botadero", "label": "Botadero clandestino de basura o escombros" },
-    { "id": "aguas", "label": "Fuga de agua potable o colapso de alcantarillado" },
-    { "id": "lotes", "label": "Lote baldío enmontado o con criaderos" },
-    { "id": "alumbrado", "label": "Luminaria pública apagada o cableado expuesto" }
+    {
+      "id": "aceras",
+      "label": "Aceras destruidas o sin rampa Ley 7600"
+    },
+    {
+      "id": "botadero",
+      "label": "Botadero clandestino de basura o escombros"
+    },
+    {
+      "id": "aguas",
+      "label": "Fuga de agua potable o colapso de alcantarillado"
+    },
+    {
+      "id": "lotes",
+      "label": "Lote baldío enmontado o con criaderos"
+    },
+    {
+      "id": "alumbrado",
+      "label": "Luminaria pública apagada o cableado expuesto"
+    }
   ],
   "formalDenunciations": [
     {
@@ -711,6 +825,245 @@
       "citizenName": "Anónimo",
       "date": "2026-09-18",
       "resolutionNote": "Oficio remitido al departamento cantonal de Gestión Ambiental para retiro de desechos."
+    }
+  ],
+  "communityReels": [
+    {
+      "id": "1",
+      "title": "Perro comunal cobrando peaje en la Plaza",
+      "author": "Vecino del Centro",
+      "category": "graciosos",
+      "sector": "San Juan Centro",
+      "description": "Firu no deja pasar a las bicis si no le tiran una galleta jajaja",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-playful-dog-enjoying-the-outdoors-42289-large.mp4",
+      "likes": 85,
+      "date": "2026-09-26",
+      "comments": []
+    },
+    {
+      "id": "2",
+      "title": "Camión de descarrichización pasando por Itaipú",
+      "author": "Comité Ambiental ADI",
+      "category": "informativos",
+      "sector": "Sector Itaipú",
+      "description": "¡A sacar llantas y chatarra hoy antes de las 2:00 PM!",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-garbage-truck-moving-in-a-suburban-street-41712-large.mp4",
+      "likes": 56,
+      "date": "2026-09-25",
+      "comments": [
+        {
+          "id": "1790623962211",
+          "author": "playo",
+          "text": "jajja",
+          "date": "2026-09-28T19:32:42.211Z"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "El ventolero de la tarde se llevó el toldo del bingo",
+      "author": "Doña Mayra",
+      "category": "locos",
+      "sector": "Salón Comunal",
+      "description": "¡Casi sale volando el animador con la tómbola pegada!",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-wind-blowing-trees-in-a-storm-41484-large.mp4",
+      "likes": 129,
+      "date": "2026-09-22",
+      "comments": []
+    },
+    {
+      "id": "4",
+      "title": "Don Chepe recordando San Juan en los años 70",
+      "author": "Archivo Histórico Distrital",
+      "category": "nostalgia",
+      "sector": "Pedrito Monge",
+      "description": "'Antes todo esto de aquí hasta Aserrí eran puros cafetales...'",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-elderly-man-talking-outdoors-42861-large.mp4",
+      "likes": 95,
+      "date": "2026-09-18",
+      "comments": []
+    }
+  ],
+  "marketplaceItems": [
+    {
+      "id": "1",
+      "title": "Bicicleta montañera R29 casi nueva",
+      "price": 85000,
+      "category": "Vehículos & Bicis",
+      "condition": "Usado - Como nuevo",
+      "sector": "San Juan Centro",
+      "description": "Frenos de disco hidráulicos, 21 velocidades Shimano. Se entrega frente a la Iglesia.",
+      "sellerName": "Carlos Murillo",
+      "phone": "50688881234",
+      "imageUrl": "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=500&auto=format&fit=crop&q=60",
+      "status": "approved",
+      "date": "2026-09-27"
+    },
+    {
+      "id": "2",
+      "title": "Refrigeradora Mabe 11 pies sin escarcha",
+      "price": 110000,
+      "category": "Hogar & Electrodomésticos",
+      "condition": "Usado - Buen estado",
+      "sector": "Sector Calle Máquinas",
+      "description": "En perfecto funcionamiento, motivo de venta por mudanza. Transporte a convenir.",
+      "sellerName": "Doña Patricia V.",
+      "phone": "50687654321",
+      "imageUrl": "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=500&auto=format&fit=crop&q=60",
+      "status": "approved",
+      "date": "2026-09-26"
+    },
+    {
+      "id": "3",
+      "title": "Juegos de playwood y madera para niños",
+      "price": 15000,
+      "category": "Juguetes & Bebés",
+      "condition": "Nuevo",
+      "sector": "Sector Itaipú",
+      "description": "Elaborados artesanalmente en taller local. Madera tratada y pintura no tóxica.",
+      "sellerName": "Taller Monge",
+      "phone": "50683334444",
+      "imageUrl": "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=500&auto=format&fit=crop&q=60",
+      "status": "pending",
+      "date": "2026-09-28"
+    }
+  ],
+  "busRoutesLared": [
+    {
+      "id": "ruta-1",
+      "code": "L-01",
+      "name": "San Juan de Dios - San José (Por Centro)",
+      "operator": "Autotransportes Lared Protur S.A.",
+      "terminalSJ": "Terminal San José (Costado Este Parque Central / Calle 4)",
+      "terminalLocal": "Terminal San Juan Centro (Frente a Plaza de Deportes)",
+      "fare": "₡420",
+      "peakFrequency": "Cada 8 - 10 min",
+      "regularFrequency": "Cada 15 min",
+      "firstBus": "04:30 AM",
+      "lastBus": "10:30 PM",
+      "stopsKey": [
+        "Parque San Juan",
+        "Super Comunal",
+        "Cruce San Rafael",
+        "La Y Griega",
+        "San José"
+      ],
+      "status": "Operativo normal",
+      "phone": "+506 2259-2000"
+    },
+    {
+      "id": "ruta-2",
+      "code": "L-02",
+      "name": "San Juan de Dios - Calle Máquinas / Itaipú",
+      "operator": "Autotransportes Lared Protur S.A.",
+      "terminalSJ": "San José Centro - Calle 4",
+      "terminalLocal": "Sector Calle Máquinas / Entrada Itaipú",
+      "fare": "₡420",
+      "peakFrequency": "Cada 12 - 15 min",
+      "regularFrequency": "Cada 20 min",
+      "firstBus": "04:45 AM",
+      "lastBus": "10:00 PM",
+      "stopsKey": [
+        "Sector Calle Máquinas",
+        "Entrada Itaipú",
+        "Cruce Principal",
+        "Desamparados Centro",
+        "San José"
+      ],
+      "status": "Operativo normal",
+      "phone": "+506 2259-2000"
+    },
+    {
+      "id": "ruta-3",
+      "code": "L-03",
+      "name": "Intersectorial San Juan - Desamparados Centro",
+      "operator": "Autotransportes Lared Protur S.A.",
+      "terminalSJ": "Clínica Marcial Fallas / Parque Desamparados",
+      "terminalLocal": "San Juan de Dios Centro",
+      "fare": "₡380",
+      "peakFrequency": "Cada 15 min",
+      "regularFrequency": "Cada 30 min",
+      "firstBus": "05:15 AM",
+      "lastBus": "08:30 PM",
+      "stopsKey": [
+        "Plaza San Juan",
+        "EBAIS",
+        "San Rafael Abajo",
+        "Mall Multicentro",
+        "Clínica Marcial Fallas"
+      ],
+      "status": "Operativo normal",
+      "phone": "+506 2259-2000"
+    }
+  ],
+  "districtSchedule": [
+    {
+      "id": "1",
+      "title": "Sesión Ordinaria Abierta de la Junta ADI",
+      "category": "Concejo & ADI",
+      "date": "2026-10-05",
+      "time": "06:30 PM",
+      "location": "Salón Comunal de San Juan de Dios",
+      "description": "Rendición de cuentas del tercer trimestre, revisión de mejoras en aceras y presupuesto de obra menor.",
+      "status": "Abierto a Vecinos"
+    },
+    {
+      "id": "2",
+      "title": "Campaña de Recolección de No Tradicionales y Chatarra",
+      "category": "Ambiental",
+      "date": "2026-10-12",
+      "time": "07:00 AM - 01:00 PM",
+      "location": "Sectores Centro, Itaipú y Calle Máquinas",
+      "description": "Paso de camión recolector para colchones, electrodomésticos en desuso y madera para prevención de dengue.",
+      "status": "Confirmado"
+    },
+    {
+      "id": "3",
+      "title": "Jornada de Vacunación y Control de Presión EBAIS",
+      "category": "Salud",
+      "date": "2026-10-18",
+      "time": "08:00 AM - 12:00 MD",
+      "location": "EBAIS San Juan de Dios (Cancha de Deportes)",
+      "description": "Prioridad para adultos mayores y personas con enfermedades crónicas adscritas al sector.",
+      "status": "Cupo Limitado"
+    }
+  ],
+  "communityPets": [
+    {
+      "id": "1",
+      "name": "Rocky",
+      "type": "perro",
+      "status": "perdido",
+      "breed": "Zaguatico cruce con Pastor",
+      "sector": "Sector Itaipú",
+      "date": "2026-09-27",
+      "description": "Lleva collar azul sin placa. Es asustadizo pero manso. Se extravió cerca de la pulpería.",
+      "contactName": "Familia Vargas",
+      "phone": "50688889999",
+      "imageUrl": "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=500&auto=format&fit=crop&q=60"
+    },
+    {
+      "id": "2",
+      "name": "Mina",
+      "type": "gato",
+      "status": "adopcion",
+      "breed": "Carey / Criolla",
+      "sector": "San Juan Centro",
+      "date": "2026-09-25",
+      "description": "Gatita rescatada de 3 meses, desparasitada y con primera vacuna. Convive con otros animales.",
+      "contactName": "Asociación Bienestar Animal SJD",
+      "phone": "50687771122",
+      "imageUrl": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&auto=format&fit=crop&q=60"
+    }
+  ],
+  "emergencyAlerts": [
+    {
+      "id": "1",
+      "active": true,
+      "level": "warning",
+      "title": "Crecida preventiva de la Quebrada Rivera",
+      "message": "Comité Municipal de Emergencias en vigilancia activa por fuertes lluvias de la tarde en Calle Máquinas.",
+      "date": "2026-09-28 14:00"
     }
   ]
 }

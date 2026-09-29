@@ -1,4 +1,6 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import EmergencyBanner from '../components/EmergencyBanner';
+import EmergencySpeedDial from '../components/EmergencySpeedDial';
 import { Navbar } from '../components/Navbar';
 import { 
   Phone, 
@@ -232,14 +234,19 @@ const FooterInternal = () => {
 };
 
 export const MainLayout = () => {
+  const location = useLocation();
+  const isReels = location.pathname === '/reels';
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Navbar />
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', overflow: isReels ? 'hidden' : 'auto' }}>
+      <EmergencyBanner />
+            <Navbar />
       {/* Margen inferior para que el contenido respire antes del pie */}
-      <main style={{ flex: 1, paddingBottom: '3rem' }}>
+      <main style={{ flex: 1, paddingBottom: isReels ? '0' : '3rem', height: isReels ? 'calc(100vh - 60px)' : 'auto', overflow: isReels ? 'hidden' : 'visible' }}>
         <Outlet />
       </main>
-      <FooterInternal />
+      {!isReels && <FooterInternal />}
+            <EmergencySpeedDial />
     </div>
   );
 };
